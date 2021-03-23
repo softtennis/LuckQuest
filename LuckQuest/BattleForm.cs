@@ -159,16 +159,7 @@ namespace LuckQuest
                 enemy_hp = 300;
                 enemy_attack = 100;
                 enemy_defense = 20;
-                critical = enemy_attack * 2;
-                if (mp < waza1)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？");
-                }
-                if (mp >= waza1)
-                {
-                    logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
-                }
-                
+                Encount(waza1);
             }
 
             if (number == 1)
@@ -177,15 +168,7 @@ namespace LuckQuest
                 enemy_hp = 400;
                 enemy_attack = 130;
                 enemy_defense = 30;
-                critical = enemy_attack * 2;
-                if (mp < waza1)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？");
-                }
-                if (mp >= waza1)
-                {
-                    logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
-                }
+                Encount(waza1);
             }
 
             if (number == 2)
@@ -194,15 +177,7 @@ namespace LuckQuest
                 enemy_hp = 500;
                 enemy_attack = 140;
                 enemy_defense = 40;
-                critical = enemy_attack * 2;
-                if (mp < waza1)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？");
-                }
-                if (mp >= waza1)
-                {
-                    logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
-                }
+                Encount(waza1);
             }
 
             if (number == 3)
@@ -211,15 +186,7 @@ namespace LuckQuest
                 enemy_hp = 700;
                 enemy_attack = 150;
                 enemy_defense = 50;
-                critical = enemy_attack * 2;
-                if (mp < waza1)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？");
-                }
-                if (mp >= waza1)
-                {
-                    logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
-                }
+                Encount(waza1);
             }
 
             if (number == 4)
@@ -228,15 +195,7 @@ namespace LuckQuest
                 enemy_hp = 800;
                 enemy_attack = 180;
                 enemy_defense = 60;
-                critical = enemy_attack * 2;
-                if (mp < waza1)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？");
-                }
-                if (mp >= waza1)
-                {
-                    logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
-                }
+                Encount(waza1);
             }
 
             if (number == 5)
@@ -245,23 +204,12 @@ namespace LuckQuest
                 enemy_hp = 1000;
                 enemy_attack = 250;
                 enemy_defense = 70;
-                critical = enemy_attack * 2;
-                if (mp < waza1)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？");
-                }
-                if (mp >= waza1)
-                {
-                    logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
-                }
+                Encount(waza1);
             }
-
             //BattleFormロード時にフォーカスを攻撃ボタンに当てる
             this.ActiveControl = attackButton;
-
-            
-
         }
+
         //こうげきボタン押下で戦闘処理を実行
         private void attackButton_Click(object sender, EventArgs e)
         {
@@ -1239,6 +1187,24 @@ namespace LuckQuest
             return false;
         }
 
+        /// <summary>
+        /// Encount
+        /// 機能概要:エンカウント時のログ内容（改行の有無）変更
+        /// 引数[waza_mp]
+        /// 戻り値:なし
+        /// </summary>
+        public void Encount(int waza_mp)
+        {
+            critical = enemy_attack * 2;
+            if (mp < waza_mp)
+            {
+                logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？");
+            }
+            else
+            {
+                logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
+            }
+        }
         //private void timer1_Tick(object sender, EventArgs e)
         //{
         //    timer1.Interval = 2000;
