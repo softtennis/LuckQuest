@@ -219,686 +219,28 @@ namespace LuckQuest
             //敵番号が0（スライム）の時
             if (number == 0)
             {
-                logTextBox.AppendText(Environment.NewLine + name + "の攻撃！");
-                if (probability())
-                {
-                    logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
-                    enemy_hp = 0;
-                }
-
-                if (enemy_hp > 0)
-                {
-                    //敵守備力から主人公攻撃力合計を減算
-                    atk_sum = enemy_defense - sum;
-
-                    //敵の守備が攻撃を上回った時
-                    if (atk_sum >= 0)
-                    {
-                        atk_sum = 1;
-                    }
-                    //敵の守備が攻撃を下回った時
-                    if (atk_sum < 0)
-                    {
-                        atk_sum = -atk_sum;
-                    }
-                    enemy_hp = enemy_hp - atk_sum;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
-
-                    if (probability2())
-                    {
-                        enemy_atk_sum = sum2 - critical;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は勢いよく突進してきた！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-
-                    else
-                    {
-                        //主人公守備力合計から敵攻撃力を減算
-                        enemy_atk_sum = sum2 - enemy_attack;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-                    
-                    hp = hp - enemy_atk_sum;
-                    hpTextBox2.Text = hp.ToString();
-                    if (hp <= 0)
-                    {
-                        hpTextBox2.Text = "0";
-                        logTextBox.AppendText(Environment.NewLine + name + "はやられてしまった…");
-                        DialogResult dialogResult = MessageBox.Show(
-                        "世界は闇に包まれた…。やり直しますか？",
-                        "GAME OVER",
-                        MessageBoxButtons.RetryCancel);
-                        if (dialogResult == DialogResult.Retry)
-                        {
-                            this.Close();
-                        }
-                        if (dialogResult == DialogResult.Cancel)
-                        {
-                            attackButton.Enabled = false;
-                            techniqueButton.Enabled = false;
-                            logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
-                        }
-                    }
-                    
-                }
-
-
-                if (enemy_hp <= 0)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
-                    monsterPictureBox.Visible = false;
-                    if (monsterPictureBox.Visible == false)
-                    {
-                        attackButton.Enabled = false;
-                        techniqueButton.Enabled = false;
-                    }
-                    DialogResult dialogResult = MessageBox.Show(
-                        "世界は守られた。もう一度守りますか？", 
-                        "GAME CLEAR",
-                        MessageBoxButtons.RetryCancel);
-                    if(dialogResult == DialogResult.Retry)
-                    {
-                        this.Close();
-                    }
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                    }
-                }
-
+                Attack();
             }
             if (number == 1)
             {
-                logTextBox.AppendText(Environment.NewLine + name + "の攻撃！");
-                if (probability())
-                {
-                    logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
-                    enemy_hp = 0;
-                }
-
-                if (enemy_hp > 0)
-                {
-                    //敵守備力から主人公攻撃力合計を減算
-                    atk_sum = enemy_defense - sum;
-
-                    //敵の守備が攻撃を上回った時
-                    if (atk_sum >= 0)
-                    {
-                        atk_sum = 1;
-                    }
-                    //敵の守備が攻撃を下回った時
-                    if (atk_sum < 0)
-                    {
-                        atk_sum = -atk_sum;
-                    }
-                    enemy_hp = enemy_hp - atk_sum;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
-
-                    if (probability2())
-                    {
-                        enemy_atk_sum = sum2 - critical;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "のコンビネーションアタック！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-
-                    else
-                    {
-                        //主人公守備力合計から敵攻撃力を減算
-                        enemy_atk_sum = sum2 - enemy_attack;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-                    
-                    hp = hp - enemy_atk_sum;
-                    hpTextBox2.Text = hp.ToString();
-                    if (hp <= 0)
-                    {
-                        hpTextBox2.Text = "0";
-                        logTextBox.AppendText(Environment.NewLine + name + "はやられてしまった…");
-                        DialogResult dialogResult = MessageBox.Show(
-                        "世界は闇に包まれた…。やり直しますか？",
-                        "GAME OVER",
-                        MessageBoxButtons.RetryCancel);
-                        if (dialogResult == DialogResult.Retry)
-                        {
-                            this.Close();
-                        }
-                        if (dialogResult == DialogResult.Cancel)
-                        {
-                            attackButton.Enabled = false;
-                            techniqueButton.Enabled = false;
-                            logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
-                        }
-                    }
-                }
-
-                if (enemy_hp <= 0)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
-                    monsterPictureBox.Visible = false;
-                    if (monsterPictureBox.Visible == false)
-                    {
-                        attackButton.Enabled = false;
-                        techniqueButton.Enabled = false;
-                    }
-                    DialogResult dialogResult = MessageBox.Show(
-                        "世界は守られた。もう一度守りますか？",
-                        "GAME CLEAR",
-                        MessageBoxButtons.RetryCancel);
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        this.Close();
-                    }
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                    }
-                }
+                Attack();
             }
-
             if (number == 2)
             {
-                logTextBox.AppendText(Environment.NewLine + name + "の攻撃！");
-                if (probability())
-                {
-                    logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
-                    enemy_hp = 0;
-                }
-
-                if (enemy_hp > 0)
-                {
-                    //敵守備力から主人公攻撃力合計を減算
-                    atk_sum = enemy_defense - sum;
-
-                    //敵の守備が攻撃を上回った時
-                    if (atk_sum >= 0)
-                    {
-                        atk_sum = 1;
-                    }
-                    //敵の守備が攻撃を下回った時
-                    if (atk_sum < 0)
-                    {
-                        atk_sum = -atk_sum;
-                    }
-                    enemy_hp = enemy_hp - atk_sum;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
-
-                    if (probability2())
-                    {
-                        enemy_atk_sum = sum2 - critical;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は岩石を飛ばしてきた！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-
-                    else
-                    {
-                        //主人公守備力合計から敵攻撃力を減算
-                        enemy_atk_sum = sum2 - enemy_attack;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-                    
-                    hp = hp - enemy_atk_sum;
-                    hpTextBox2.Text = hp.ToString();
-                    if (hp <= 0)
-                    {
-                        hpTextBox2.Text = "0";
-                        logTextBox.AppendText(Environment.NewLine + name + "はやられてしまった…");
-                        DialogResult dialogResult = MessageBox.Show(
-                        "世界は闇に包まれた…。やり直しますか？",
-                        "GAME OVER",
-                        MessageBoxButtons.RetryCancel);
-                        if (dialogResult == DialogResult.Retry)
-                        {
-                            this.Close();
-                        }
-                        if (dialogResult == DialogResult.Cancel)
-                        {
-                            attackButton.Enabled = false;
-                            techniqueButton.Enabled = false;
-                            logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
-                        }
-                    }
-                }
-
-                if (enemy_hp <= 0)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
-                    monsterPictureBox.Visible = false;
-                    if (monsterPictureBox.Visible == false)
-                    {
-                        attackButton.Enabled = false;
-                        techniqueButton.Enabled = false;
-                    }
-                    DialogResult dialogResult = MessageBox.Show(
-                        "世界は守られた。もう一度守りますか？",
-                        "GAME CLEAR",
-                        MessageBoxButtons.RetryCancel);
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        this.Close();
-                    }
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                    }
-                }
+                Attack();
             }
-
             if (number == 3)
             {
-                logTextBox.AppendText(Environment.NewLine + name + "の攻撃！");
-                if (probability())
-                {
-                    logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
-                    enemy_hp = 0;
-                }
-
-                if (enemy_hp > 0)
-                {
-                    //敵守備力から主人公攻撃力合計を減算
-                    atk_sum = enemy_defense - sum;
-
-                    //敵の守備が攻撃を上回った時
-                    if (atk_sum >= 0)
-                    {
-                        atk_sum = 1;
-                    }
-                    //敵の守備が攻撃を下回った時
-                    if (atk_sum < 0)
-                    {
-                        atk_sum = -atk_sum;
-                    }
-                    enemy_hp = enemy_hp - atk_sum;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
-
-                    if (probability2())
-                    {
-                        enemy_atk_sum = sum2 - critical;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の無数の刃が襲い掛かる！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-
-                    else
-                    {
-                        //主人公守備力合計から敵攻撃力を減算
-                        enemy_atk_sum = sum2 - enemy_attack;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-                    
-                    hp = hp - enemy_atk_sum;
-                    hpTextBox2.Text = hp.ToString();
-                    if (hp <= 0)
-                    {
-                        hpTextBox2.Text = "0";
-                        logTextBox.AppendText(Environment.NewLine + name + "はやられてしまった…");
-                        DialogResult dialogResult = MessageBox.Show(
-                        "世界は闇に包まれた…。やり直しますか？",
-                        "GAME OVER",
-                        MessageBoxButtons.RetryCancel);
-                        if (dialogResult == DialogResult.Retry)
-                        {
-                            this.Close();
-                        }
-                        if (dialogResult == DialogResult.Cancel)
-                        {
-                            attackButton.Enabled = false;
-                            techniqueButton.Enabled = false;
-                            logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
-                        }
-                    }
-                }
-
-                if (enemy_hp <= 0)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
-                    monsterPictureBox.Visible = false;
-                    if (monsterPictureBox.Visible == false)
-                    {
-                        attackButton.Enabled = false;
-                        techniqueButton.Enabled = false;
-                    }
-                    DialogResult dialogResult = MessageBox.Show(
-                        "世界は守られた。もう一度守りますか？",
-                        "GAME CLEAR",
-                        MessageBoxButtons.RetryCancel);
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        this.Close();
-                    }
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                    }
-                }
+                Attack();
             }
-
             if (number == 4)
             {
-                logTextBox.AppendText(Environment.NewLine + name + "の攻撃！");
-                if (probability())
-                {
-                    logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
-                    enemy_hp = 0;
-                }
-
-                if (enemy_hp > 0)
-                {
-                    //敵守備力から主人公攻撃力合計を減算
-                    atk_sum = enemy_defense - sum;
-
-                    //敵の守備が攻撃を上回った時
-                    if (atk_sum >= 0)
-                    {
-                        atk_sum = 1;
-                    }
-                    //敵の守備が攻撃を下回った時
-                    if (atk_sum < 0)
-                    {
-                        atk_sum = -atk_sum;
-                    }
-                    enemy_hp = enemy_hp - atk_sum;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
-
-                    if (probability2())
-                    {
-                        enemy_atk_sum = sum2 - critical;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は猛烈な炎を噴き出した！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-
-                    else
-                    {
-                        //主人公守備力合計から敵攻撃力を減算
-                        enemy_atk_sum = sum2 - enemy_attack;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-                    
-                    hp = hp - enemy_atk_sum;
-                    hpTextBox2.Text = hp.ToString();
-                    if (hp <= 0)
-                    {
-                        hpTextBox2.Text = "0";
-                        logTextBox.AppendText(Environment.NewLine + name + "はやられてしまった…");
-                        DialogResult dialogResult = MessageBox.Show(
-                        "世界は闇に包まれた…。やり直しますか？",
-                        "GAME OVER",
-                        MessageBoxButtons.RetryCancel);
-                        if (dialogResult == DialogResult.Retry)
-                        {
-                            this.Close();
-                        }
-                        if (dialogResult == DialogResult.Cancel)
-                        {
-                            attackButton.Enabled = false;
-                            techniqueButton.Enabled = false;
-                            logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
-                        }
-                    }
-                }
-
-                if (enemy_hp <= 0)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
-                    monsterPictureBox.Visible = false;
-                    if (monsterPictureBox.Visible == false)
-                    {
-                        attackButton.Enabled = false;
-                        techniqueButton.Enabled = false;
-                    }
-                    DialogResult dialogResult = MessageBox.Show(
-                        "世界は守られた。もう一度守りますか？",
-                        "GAME CLEAR",
-                        MessageBoxButtons.RetryCancel);
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        this.Close();
-                    }
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                    }
-                }
+                Attack();
             }
-
             if (number == 5)
             {
-                logTextBox.AppendText(Environment.NewLine + name + "の攻撃！");
-                if (probability())
-                {
-                    logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
-                    enemy_hp = 0;
-                }
-
-                if (enemy_hp > 0)
-                {
-                    //敵守備力から主人公攻撃力合計を減算
-                    atk_sum = enemy_defense - sum;
-
-                    //敵の守備が攻撃を上回った時
-                    if (atk_sum >= 0)
-                    {
-                        atk_sum = 1;
-                    }
-                    //敵の守備が攻撃を下回った時
-                    if (atk_sum < 0)
-                    {
-                        atk_sum = -atk_sum;
-                    }
-                    enemy_hp = enemy_hp - atk_sum;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
-
-                    if (probability2())
-                    {
-                        enemy_atk_sum = sum2 - critical;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は魔王のオーラを放った！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-
-                    else
-                    {
-                        //主人公守備力合計から敵攻撃力を減算
-                        enemy_atk_sum = sum2 - enemy_attack;
-
-                        //敵の攻撃が守備を下回った時
-                        if (enemy_atk_sum >= 0)
-                        {
-                            enemy_atk_sum = 1;
-                        }
-                        //敵の攻撃が守備を上回った時
-                        if (enemy_atk_sum < 0)
-                        {
-                            enemy_atk_sum = -enemy_atk_sum;
-                        }
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
-                        logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
-                    }
-                    
-                    hp = hp - enemy_atk_sum;
-                    hpTextBox2.Text = hp.ToString();
-                    if (hp <= 0)
-                    {
-                        hpTextBox2.Text = "0";
-                        logTextBox.AppendText(Environment.NewLine + name + "はやられてしまった…");
-                        DialogResult dialogResult = MessageBox.Show(
-                        "世界は闇に包まれた…。やり直しますか？",
-                        "GAME OVER",
-                        MessageBoxButtons.RetryCancel);
-                        if (dialogResult == DialogResult.Retry)
-                        {
-                            this.Close();
-                        }
-                        if (dialogResult == DialogResult.Cancel)
-                        {
-                            attackButton.Enabled = false;
-                            techniqueButton.Enabled = false;
-                            logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
-                        }
-                    }
-                }
-
-                if (enemy_hp <= 0)
-                {
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
-                    monsterPictureBox.Visible = false;
-                    if (monsterPictureBox.Visible == false)
-                    {
-                        attackButton.Enabled = false;
-                        techniqueButton.Enabled = false;
-                    }
-                    DialogResult dialogResult = MessageBox.Show(
-                        "世界は守られた。もう一度守りますか？",
-                        "GAME CLEAR",
-                        MessageBoxButtons.RetryCancel);
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        this.Close();
-                       
-                    }
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                    }
-                }
-            
+                Attack();
             }
-
         }
 
 
@@ -1204,6 +546,152 @@ namespace LuckQuest
             {
                 logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + name + "はどうする？";
             }
+        }
+
+        /// <summary>
+        /// Attack
+        /// 機能概要:戦闘時の計算処理
+        /// 引数:なし
+        /// 戻り値:なし
+        /// </summary>
+        public void Attack()
+        {
+            logTextBox.AppendText(Environment.NewLine + name + "の攻撃！");
+            if (probability())
+            {
+                logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
+                enemy_hp = 0;
+            }
+
+            if (enemy_hp > 0)
+            {
+                //敵守備力から主人公攻撃力合計を減算
+                atk_sum = enemy_defense - sum;
+
+                //敵の守備が攻撃を上回った時
+                if (atk_sum >= 0)
+                {
+                    atk_sum = 1;
+                }
+                //敵の守備が攻撃を下回った時
+                if (atk_sum < 0)
+                {
+                    atk_sum = -atk_sum;
+                }
+                enemy_hp = enemy_hp - atk_sum;
+                System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
+                logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
+
+                if (probability2())
+                {
+                    enemy_atk_sum = sum2 - critical;
+
+                    //敵の攻撃が守備を下回った時
+                    if (enemy_atk_sum >= 0)
+                    {
+                        enemy_atk_sum = 1;
+                    }
+                    //敵の攻撃が守備を上回った時
+                    if (enemy_atk_sum < 0)
+                    {
+                        enemy_atk_sum = -enemy_atk_sum;
+                    }
+
+                    logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
+
+                    if (number == 0)
+                    {
+                        logTextBox.AppendText(Environment.NewLine + monster_name + "は勢いよく突進してきた！");
+                    }
+                    if (number == 1)
+                    {
+                        logTextBox.AppendText(Environment.NewLine + monster_name + "のコンビネーションアタック！");
+                    }
+                    if (number == 2)
+                    {
+                        logTextBox.AppendText(Environment.NewLine + monster_name + "は岩石を飛ばしてきた！");
+                    }
+                    if (number == 3)
+                    {
+                        logTextBox.AppendText(Environment.NewLine + monster_name + "の無数の刃が襲い掛かる！");
+                    }
+                    if (number == 4)
+                    {
+                        logTextBox.AppendText(Environment.NewLine + monster_name + "は猛烈な炎を噴き出した！");
+                    }
+                    if (number == 5)
+                    {
+                        logTextBox.AppendText(Environment.NewLine + monster_name + "は魔王のオーラを放った！");
+                    }
+                    logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
+                }
+                else
+                {
+                    //主人公守備力合計から敵攻撃力を減算
+                    enemy_atk_sum = sum2 - enemy_attack;
+
+                    //敵の攻撃が守備を下回った時
+                    if (enemy_atk_sum >= 0)
+                    {
+                        enemy_atk_sum = 1;
+                    }
+                    //敵の攻撃が守備を上回った時
+                    if (enemy_atk_sum < 0)
+                    {
+                        enemy_atk_sum = -enemy_atk_sum;
+                    }
+                    logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
+                    logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
+                }
+
+                hp = hp - enemy_atk_sum;
+                hpTextBox2.Text = hp.ToString();
+                if (hp <= 0)
+                {
+                    hpTextBox2.Text = "0";
+                    logTextBox.AppendText(Environment.NewLine + name + "はやられてしまった…");
+                    DialogResult dialogResult = MessageBox.Show(
+                    "世界は闇に包まれた…。やり直しますか？",
+                    "GAME OVER",
+                    MessageBoxButtons.RetryCancel);
+                    if (dialogResult == DialogResult.Retry)
+                    {
+                        this.Close();
+                    }
+                    if (dialogResult == DialogResult.Cancel)
+                    {
+                        attackButton.Enabled = false;
+                        techniqueButton.Enabled = false;
+                        logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
+                    }
+                }
+
+            }
+
+
+            if (enemy_hp <= 0)
+            {
+                logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
+                monsterPictureBox.Visible = false;
+                if (monsterPictureBox.Visible == false)
+                {
+                    attackButton.Enabled = false;
+                    techniqueButton.Enabled = false;
+                }
+                DialogResult dialogResult = MessageBox.Show(
+                    "世界は守られた。もう一度守りますか？",
+                    "GAME CLEAR",
+                    MessageBoxButtons.RetryCancel);
+                if (dialogResult == DialogResult.Retry)
+                {
+                    this.Close();
+                }
+                if (dialogResult == DialogResult.Cancel)
+                {
+                    logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
+                }
+            }
+
         }
         //private void timer1_Tick(object sender, EventArgs e)
         //{
