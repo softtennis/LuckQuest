@@ -216,31 +216,7 @@ namespace LuckQuest
             techniquePanel.Visible = false;
             monsterPictureBox.Visible = true;
             battlePictureBox.Image = Image.FromFile("haikei.png");
-            //敵番号が0（スライム）の時
-            if (number == 0)
-            {
-                Attack();
-            }
-            if (number == 1)
-            {
-                Attack();
-            }
-            if (number == 2)
-            {
-                Attack();
-            }
-            if (number == 3)
-            {
-                Attack();
-            }
-            if (number == 4)
-            {
-                Attack();
-            }
-            if (number == 5)
-            {
-                Attack();
-            }
+            Attack();
         }
 
 
@@ -574,7 +550,7 @@ namespace LuckQuest
                     atk_sum = 1;
                 }
                 //敵の守備が攻撃を下回った時
-                if (atk_sum < 0)
+                else
                 {
                     atk_sum = -atk_sum;
                 }
@@ -592,37 +568,61 @@ namespace LuckQuest
                         enemy_atk_sum = 1;
                     }
                     //敵の攻撃が守備を上回った時
-                    if (enemy_atk_sum < 0)
+                    else
                     {
                         enemy_atk_sum = -enemy_atk_sum;
                     }
 
                     logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
 
+                    //switch (number)
+                    //{
+                    //    case 0:
+                    //        logTextBox.AppendText(Environment.NewLine + monster_name + "は勢いよく突進してきた！");
+                    //        break;
+                    //    case 1:
+                    //        logTextBox.AppendText(Environment.NewLine + monster_name + "のコンビネーションアタック！");
+                    //        break;
+                    //    case 2:
+                    //        logTextBox.AppendText(Environment.NewLine + monster_name + "は岩石を飛ばしてきた！");
+                    //        break;
+                    //    case 3:
+                    //        logTextBox.AppendText(Environment.NewLine + monster_name + "の無数の刃が襲い掛かる！");
+                    //        break;
+                    //    case 4:
+                    //        logTextBox.AppendText(Environment.NewLine + monster_name + "は猛烈な炎を噴き出した！");
+                    //        break;
+                    //    case 5:
+                    //        logTextBox.AppendText(Environment.NewLine + monster_name + "は魔王のオーラを放った！");
+                    //        break;
+                    //}
+                    string message = "";
+                    
                     if (number == 0)
                     {
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は勢いよく突進してきた！");
+                        message = "は勢いよく突進してきた！";
                     }
-                    if (number == 1)
+                    else if(number == 1)
                     {
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "のコンビネーションアタック！");
+                        message = "のコンビネーションアタック！";
                     }
-                    if (number == 2)
+                    else if (number == 2)
                     {
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は岩石を飛ばしてきた！");
+                        message = "は岩石を飛ばしてきた！";
                     }
-                    if (number == 3)
+                    else if (number == 3)
                     {
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "の無数の刃が襲い掛かる！");
+                        message = "の無数の刃が襲い掛かる！";
                     }
-                    if (number == 4)
+                    else if (number == 4)
                     {
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は猛烈な炎を噴き出した！");
+                        message = "は猛烈な炎を噴き出した！";
                     }
-                    if (number == 5)
+                    else if (number == 5)
                     {
-                        logTextBox.AppendText(Environment.NewLine + monster_name + "は魔王のオーラを放った！");
+                        message = "は魔王のオーラを放った！";
                     }
+                    logTextBox.AppendText(Environment.NewLine + monster_name + message);
                     logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
                 }
                 else
@@ -643,7 +643,6 @@ namespace LuckQuest
                     logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
                     logTextBox.AppendText(Environment.NewLine + name + "に" + enemy_atk_sum + "のダメージ!");
                 }
-
                 hp = hp - enemy_atk_sum;
                 hpTextBox2.Text = hp.ToString();
                 if (hp <= 0)
@@ -665,7 +664,6 @@ namespace LuckQuest
                         logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
                     }
                 }
-
             }
 
 
