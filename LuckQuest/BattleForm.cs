@@ -84,43 +84,37 @@ namespace LuckQuest
 
         public void BattleFormLoad()
         {
-
             if (job == "勇者")
             {
                 waza1 = 20;
                 //waza2 = 30;
                 //waza3 = 40;
             }
-
-            if (job == "戦士")
+            else if (job == "戦士")
             {
                 waza1 = 20;
                 //waza2 = 30;
                 //waza3 = 40;
             }
-
-            if (job == "盗賊")
+            else if (job == "盗賊")
             {
                 waza1 = 20;
                 //waza2 = 30;
                 //waza3 = 40;
             }
-
-            if (job == "遊び人")
+            else if (job == "遊び人")
             {
                 waza1 = 20;
                 //waza2 = 30;
                 //waza3 = 40;
             }
-
-            if (job == "魔法使い")
+            else if (job == "魔法使い")
             {
                 waza1 = 20;
                 //waza2 = 30;
                 //waza3 = 40;
             }
-
-            if (job == "賢者")
+            else if (job == "賢者")
             {
                 waza1 = 20;
                 //waza2 = 30;
@@ -153,59 +147,114 @@ namespace LuckQuest
             number = random.Next(enemies.Length);
             monsterPictureBox.Image = Image.FromFile(enemies[number]);
 
+            string m_name = "";
+            int e_hp = 0;
+            int e_attack = 0;
+            int e_defense = 0;
+
             if (number == 0)
             {
-                monster_name = "スライム";
-                enemy_hp = 300;
-                enemy_attack = 100;
-                enemy_defense = 20;
-                Encount(waza1);
+                m_name = "スライム";
+                e_hp = 300;
+                e_attack = 100;
+                e_defense = 20;
+            }
+            else if (number == 1)
+            {
+                m_name = "スライムナイト";
+                e_hp = 400;
+                e_attack = 130;
+                e_defense = 30;
+            }
+            else if (number == 2)
+            {
+                m_name = "ゴーレム";
+                e_hp = 500;
+                e_attack = 140;
+                e_defense = 40;
+            }
+            else if (number == 3)
+            {
+                m_name = "キラーマシーン";
+                e_hp = 700;
+                e_attack = 150;
+                e_defense = 50;
+            }
+            else if (number == 4)
+            {
+                m_name = "ドラゴン";
+                e_hp = 1000;
+                e_attack = 180;
+                e_defense = 60;
+            }
+            else if (number == 5)
+            {
+                m_name = "魔王";
+                e_hp = 2000;
+                e_attack = 250;
+                e_defense = 70;
             }
 
-            if (number == 1)
-            {
-                monster_name = "スライムナイト";
-                enemy_hp = 400;
-                enemy_attack = 130;
-                enemy_defense = 30;
-                Encount(waza1);
-            }
+            monster_name = m_name;
+            enemy_hp = e_hp;
+            enemy_attack = e_attack;
+            enemy_defense = e_defense;
+            Encount(waza1);
 
-            if (number == 2)
-            {
-                monster_name = "ゴーレム";
-                enemy_hp = 500;
-                enemy_attack = 140;
-                enemy_defense = 40;
-                Encount(waza1);
-            }
+            //if (number == 0)
+            //{
+            //    monster_name = "スライム";
+            //    enemy_hp = 300;
+            //    enemy_attack = 100;
+            //    enemy_defense = 20;
+            //    Encount(waza1);
+            //}
 
-            if (number == 3)
-            {
-                monster_name = "キラーマシン";
-                enemy_hp = 700;
-                enemy_attack = 150;
-                enemy_defense = 50;
-                Encount(waza1);
-            }
+            //else if (number == 1)
+            //{
+            //    monster_name = "スライムナイト";
+            //    enemy_hp = 400;
+            //    enemy_attack = 130;
+            //    enemy_defense = 30;
+            //    Encount(waza1);
+            //}
 
-            if (number == 4)
-            {
-                monster_name = "ドラゴン";
-                enemy_hp = 800;
-                enemy_attack = 180;
-                enemy_defense = 60;
-                Encount(waza1);
-            }
+            //else if (number == 2)
+            //{
+            //    monster_name = "ゴーレム";
+            //    enemy_hp = 500;
+            //    enemy_attack = 140;
+            //    enemy_defense = 40;
+            //    Encount(waza1);
+            //}
 
-            if (number == 5)
-            {
-                monster_name = "魔王";
-                enemy_hp = 1000;
-                enemy_attack = 250;
-                enemy_defense = 70;
-                Encount(waza1);
-            }
+            //else if (number == 3)
+            //{
+            //    monster_name = "キラーマシン";
+            //    enemy_hp = 700;
+            //    enemy_attack = 150;
+            //    enemy_defense = 50;
+            //    Encount(waza1);
+            //}
+
+            //else if (number == 4)
+            //{
+            //    monster_name = "ドラゴン";
+            //    enemy_hp = 800;
+            //    enemy_attack = 180;
+            //    enemy_defense = 60;
+            //    Encount(waza1);
+            //}
+
+            //else if (number == 5)
+            //{
+            //    monster_name = "魔王";
+            //    enemy_hp = 1000;
+            //    enemy_attack = 250;
+            //    enemy_defense = 70;
+            //    Encount(waza1);
+            //}
+
             //BattleFormロード時にフォーカスを攻撃ボタンに当てる
             this.ActiveControl = attackButton;
         }
@@ -219,16 +268,18 @@ namespace LuckQuest
             Attack();
         }
 
-
         //職業ごとに技名を設定
         private void techniqueButton_Click(object sender, EventArgs e)
         {
             techniquePanel.Visible = true;
             monsterPictureBox.Visible = true;
             battlePictureBox.Image = Image.FromFile("haikei.png");
+
+            string waza_name = "";
+
             if (job == "勇者")
             {
-                skillButton.Text = "ライデイン（消費MP：20、攻撃力：200）";
+                waza_name = "ライデイン（消費MP：20、攻撃力：200）";
                 //if(level >= 30)
                 //{
                 //    skillButton2.Visible = true;
@@ -240,9 +291,9 @@ namespace LuckQuest
                 //    }
                 //}
             }
-            if (job == "戦士")
+            else if (job == "戦士")
             {
-                skillButton.Text = "魔人斬り（消費MP：20、攻撃力：200）";
+                waza_name = "魔人斬り（消費MP：20、攻撃力：200）";
                 //if (level >= 30)
                 //{
                 //    skillButton2.Visible = true;
@@ -254,9 +305,9 @@ namespace LuckQuest
                 //    }
                 //}
             }
-            if (job == "盗賊")
+            else if (job == "盗賊")
             {
-                skillButton.Text = "ポイズンダガー（消費MP：20、攻撃力：100）";
+                waza_name = "ポイズンダガー（消費MP：20、攻撃力：100）";
                 //if (level >= 30)
                 //{
                 //    skillButton2.Visible = true;
@@ -268,13 +319,13 @@ namespace LuckQuest
                 //    }
                 //}
             }
-            if (job == "遊び人")
+            else if (job == "遊び人")
             {
-                skillButton.Text = "奇妙なダンス（使うと…？）";
+                waza_name = "奇妙なダンス（使うと…？）";
             }
-            if (job == "魔法使い")
+            else if (job == "魔法使い")
             {
-                skillButton.Text = "バギクロス（消費MP：20、攻撃力：200）";
+                waza_name = "バギクロス（消費MP：20、攻撃力：200）";
                 //if (level >= 30)
                 //{
                 //    skillButton2.Visible = true;
@@ -286,9 +337,9 @@ namespace LuckQuest
                 //    }
                 //}
             }
-            if (job == "賢者")
+            else if (job == "賢者")
             {
-                skillButton.Text = "イオナズン（消費MP：20、攻撃力：500）";
+                waza_name = "イオナズン（消費MP：20、攻撃力：500）";
                 //if (level >= 30)
                 //{
                 //    skillButton2.Visible = true;
@@ -300,6 +351,7 @@ namespace LuckQuest
                 //    }
                 //}
             }
+            skillButton.Text = waza_name;
         }
 
         //わざボタン
@@ -312,88 +364,140 @@ namespace LuckQuest
                 logTextBox.AppendText(Environment.NewLine + "MPが足りない！");
                 techniquePanel.Visible = false;
             }
-
-            if (mp >= waza1)
+            else
             {
+                string waza1_message1 = "";
+                string waza1_message2 = "";
+                int waza1_damage = 0;
+                string image_file = "";
+
                 if (job == "勇者")
                 {
-                    mp = mp - waza1;
-                    logTextBox.AppendText(Environment.NewLine + "わざ発動！ライデイン！" + Environment.NewLine + monster_name + "に稲光が走る！");
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
-                    enemy_hp = enemy_hp - 200;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    mpTextBox2.Text = mp.ToString();
-                    techniquePanel.Visible = false;
-                    monsterPictureBox.Visible = false;
-                    battlePictureBox.Image = Image.FromFile("inaduma.gif");
-
+                    waza1_message1 = "わざ発動！ライデイン！";
+                    waza1_message2 = "に稲光が走る！";
+                    waza1_damage = 200;
+                    image_file = "inaduma.gif";
                 }
-
-                if (job == "戦士")
+                else if (job == "戦士")
                 {
-                    mp = mp - waza1;
-                    logTextBox.AppendText(Environment.NewLine + "わざ発動！魔人斬り！" + Environment.NewLine + monster_name + "に斬撃が襲う！");
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
-                    enemy_hp = enemy_hp - 200;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    mpTextBox2.Text = mp.ToString();
-                    techniquePanel.Visible = false;
-                    monsterPictureBox.Visible = false;
-                    battlePictureBox.Image = Image.FromFile("majingiri.gif");
+                    waza1_message1 = "わざ発動！魔人斬り！";
+                    waza1_message2 = "に斬撃が襲う！";
+                    waza1_damage = 200;
+                    image_file = "majingiri.gif";
                 }
-
-                if (job == "盗賊")
+                else if (job == "盗賊")
                 {
-                    mp = mp - waza1;
-                    logTextBox.AppendText(Environment.NewLine + "わざ発動！ポイズンダガー！" + Environment.NewLine + monster_name + "に猛毒が迫る！");
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
-                    enemy_hp = enemy_hp - 200;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    mpTextBox2.Text = mp.ToString();
-                    techniquePanel.Visible = false;
-                    monsterPictureBox.Visible = false;
-                    battlePictureBox.Image = Image.FromFile("doku.gif");
+                    waza1_message1 = "わざ発動！ポイズンダガー！";
+                    waza1_message2 = "に猛毒が迫る！";
+                    waza1_damage = 200;
+                    image_file = "doku.gif";
                 }
-
-                if (job == "魔法使い")
+                else if (job == "魔法使い")
                 {
-                    mp = mp - waza1;
-                    logTextBox.AppendText(Environment.NewLine + "わざ発動！バギクロス！" + Environment.NewLine + monster_name + "に真空波が襲い掛かる！");
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
-                    enemy_hp = enemy_hp - 200;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    mpTextBox2.Text = mp.ToString();
-                    techniquePanel.Visible = false;
-                    monsterPictureBox.Visible = false;
-                    battlePictureBox.Image = Image.FromFile("kaze.gif");
+                    waza1_message1 = "わざ発動！バギクロス！";
+                    waza1_message2 = "に真空波が襲い掛かる！";
+                    waza1_damage = 200;
+                    image_file = "kaze.gif";
                 }
-
-                if (job == "賢者")
+                else if (job == "賢者")
                 {
-                    mp = mp - waza1;
-                    logTextBox.AppendText(Environment.NewLine + "わざ発動！イオナズン！" + Environment.NewLine + monster_name + "も含め、辺り一帯が吹き飛んだ！");
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "に500のダメージ！");
-                    enemy_hp = enemy_hp - 500;
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    mpTextBox2.Text = mp.ToString();
-                    techniquePanel.Visible = false;
-                    monsterPictureBox.Visible = false;
-                    battlePictureBox.Image = Image.FromFile("bakuhatu.gif");
+                    waza1_message1 = "わざ発動！イオナズン！";
+                    waza1_message2 = "も含め、辺り一帯が吹き飛んだ！";
+                    waza1_damage = 500;
+                    image_file = "bakuhatu.gif";
                 }
-
-                if (job == "遊び人")
+                else if (job == "遊び人")
                 {
-                    mp = mp - waza1;
-                    logTextBox.AppendText(Environment.NewLine + "わざ発動！奇妙なダンス！" + Environment.NewLine + monster_name + "にダメージはなさそうだ！");
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "にダメージは入らなかった！が、反省して賢者にjobチェンジした！");
+                    waza1_message1 = "わざ発動！奇妙なダンス！";
+                    waza1_message2 = "にダメージは入らなかった！が、反省して賢者にjobチェンジした！";
                     job = "賢者";
                     jobTextBox2.Text = job + "(元遊び人)";
-                    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                    mpTextBox2.Text = mp.ToString();
-                    techniquePanel.Visible = false;
-                    monsterPictureBox.Visible = false;
-                    battlePictureBox.Image = Image.FromFile("odori.gif");
+                    image_file = "odori.gif";
                 }
+
+                mp = mp - waza1;
+                mpTextBox2.Text = mp.ToString();
+                enemy_hp = enemy_hp - waza1_damage;
+                logTextBox.AppendText(Environment.NewLine + waza1_message1 + Environment.NewLine + monster_name + waza1_message2);
+                logTextBox.AppendText(Environment.NewLine + monster_name + "に" + waza1_damage + "のダメージ！");
+                techniquePanel.Visible = false;
+                monsterPictureBox.Visible = false;
+                battlePictureBox.Image = Image.FromFile(image_file);
+
+                //if (job == "勇者")
+                //{
+                //    mp = mp - waza1;
+                //    logTextBox.AppendText(Environment.NewLine + "わざ発動！ライデイン！" + Environment.NewLine + monster_name + "に稲光が走る！");
+                //    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
+                //    enemy_hp = enemy_hp - 200;
+                //    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
+                //    mpTextBox2.Text = mp.ToString();
+                //    techniquePanel.Visible = false;
+                //    monsterPictureBox.Visible = false;
+                //    battlePictureBox.Image = Image.FromFile("inaduma.gif");
+
+                //}
+                //else if (job == "戦士")
+                //{
+                //    mp = mp - waza1;
+                //    logTextBox.AppendText(Environment.NewLine + "わざ発動！魔人斬り！" + Environment.NewLine + monster_name + "に斬撃が襲う！");
+                //    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
+                //    enemy_hp = enemy_hp - 200;
+                //    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
+                //    mpTextBox2.Text = mp.ToString();
+                //    techniquePanel.Visible = false;
+                //    monsterPictureBox.Visible = false;
+                //    battlePictureBox.Image = Image.FromFile("majingiri.gif");
+                //}
+                //else if (job == "盗賊")
+                //{
+                //    mp = mp - waza1;
+                //    logTextBox.AppendText(Environment.NewLine + "わざ発動！ポイズンダガー！" + Environment.NewLine + monster_name + "に猛毒が迫る！");
+                //    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
+                //    enemy_hp = enemy_hp - 200;
+                //    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
+                //    mpTextBox2.Text = mp.ToString();
+                //    techniquePanel.Visible = false;
+                //    monsterPictureBox.Visible = false;
+                //    battlePictureBox.Image = Image.FromFile("doku.gif");
+                //}
+                //else if (job == "魔法使い")
+                //{
+                //    mp = mp - waza1;
+                //    logTextBox.AppendText(Environment.NewLine + "わざ発動！バギクロス！" + Environment.NewLine + monster_name + "に真空波が襲い掛かる！");
+                //    logTextBox.AppendText(Environment.NewLine + monster_name + "に200のダメージ！");
+                //    enemy_hp = enemy_hp - 200;
+                //    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
+                //    mpTextBox2.Text = mp.ToString();
+                //    techniquePanel.Visible = false;
+                //    monsterPictureBox.Visible = false;
+                //    battlePictureBox.Image = Image.FromFile("kaze.gif");
+                //}
+                //else if (job == "賢者")
+                //{
+                //    mp = mp - waza1;
+                //    logTextBox.AppendText(Environment.NewLine + "わざ発動！イオナズン！" + Environment.NewLine + monster_name + "も含め、辺り一帯が吹き飛んだ！");
+                //    logTextBox.AppendText(Environment.NewLine + monster_name + "に500のダメージ！");
+                //    enemy_hp = enemy_hp - 500;
+                //    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
+                //    mpTextBox2.Text = mp.ToString();
+                //    techniquePanel.Visible = false;
+                //    monsterPictureBox.Visible = false;
+                //    battlePictureBox.Image = Image.FromFile("bakuhatu.gif");
+                //}
+                //else if (job == "遊び人")
+                //{
+                //    mp = mp - waza1;
+                //    logTextBox.AppendText(Environment.NewLine + "わざ発動！奇妙なダンス！" + Environment.NewLine + monster_name + "にダメージはなさそうだ！");
+                //    logTextBox.AppendText(Environment.NewLine + monster_name + "にダメージは入らなかった！が、反省して賢者にjobチェンジした！");
+                //    job = "賢者";
+                //    jobTextBox2.Text = job + "(元遊び人)";
+                //    System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
+                //    mpTextBox2.Text = mp.ToString();
+                //    techniquePanel.Visible = false;
+                //    monsterPictureBox.Visible = false;
+                //    battlePictureBox.Image = Image.FromFile("odori.gif");
+                //}
             }
 
             //if (mp >= waza2)
@@ -470,7 +574,7 @@ namespace LuckQuest
                 {
                     this.Close();
                 }
-                if (dialogResult == DialogResult.Cancel)
+                else if (dialogResult == DialogResult.Cancel)
                 {
                     battlePictureBox.Image = Image.FromFile("haikei.png");
                     techniqueButton.Enabled = false;
@@ -636,7 +740,7 @@ namespace LuckQuest
                         enemy_atk_sum = 1;
                     }
                     //敵の攻撃が守備を上回った時
-                    if (enemy_atk_sum < 0)
+                    else
                     {
                         enemy_atk_sum = -enemy_atk_sum;
                     }
@@ -657,7 +761,7 @@ namespace LuckQuest
                     {
                         this.Close();
                     }
-                    if (dialogResult == DialogResult.Cancel)
+                    else if (dialogResult == DialogResult.Cancel)
                     {
                         attackButton.Enabled = false;
                         techniqueButton.Enabled = false;
@@ -667,7 +771,7 @@ namespace LuckQuest
             }
 
 
-            if (enemy_hp <= 0)
+            else
             {
                 logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
                 monsterPictureBox.Visible = false;
@@ -684,12 +788,11 @@ namespace LuckQuest
                 {
                     this.Close();
                 }
-                if (dialogResult == DialogResult.Cancel)
+                else if (dialogResult == DialogResult.Cancel)
                 {
                     logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
                 }
             }
-
         }
         //private void timer1_Tick(object sender, EventArgs e)
         //{
