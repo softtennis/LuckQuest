@@ -26,27 +26,28 @@ namespace LuckQuest
         //敵番号
         private static int number = 0;
         //敵名
-        private static string monster_name;
+        //private static string monster_name;
         //敵HP
-        private static int enemy_hp = 0;
+        //private static int enemy_hp = 0;
         //敵攻撃力
-        private static int enemy_attack = 0;
+        //private static int enemy_attack = 0;
         //敵守備力
-        private static int enemy_defense = 0;
+        //private static int enemy_defense = 0;
         //②から敵攻撃力を減算
         private static int enemy_atk_sum = 0;
+        //敵固有わざの攻撃力
+        private static int critical;
 
         int waza1 = 0;
         //int waza2 = 0;
         //int waza3 = 0;
 
         private Hero hero = new Hero();
-
-        private static int critical;
+        private Enemy enemy = new Enemy();
+        //private Enum type = new Enum();
 
         public BattleForm(Hero Hero)
         {
-            
             InitializeComponent();
 
             hero = Hero;
@@ -115,63 +116,12 @@ namespace LuckQuest
             battlePictureBox.Image = Image.FromFile("haikei.png");
 
             //敵画像ファイルをランダムに描画
-            string[] enemies = { "suraimu-removebg-preview.png", "suraimu_night-removebg-preview.png", "goremu.png", "killer_micine.jpg", "dragon.png", "maou-removebg-preview.png" };
             var random = new Random();
-            number = random.Next(enemies.Length);
-            monsterPictureBox.Image = Image.FromFile(enemies[number]);
-
-            string m_name = "";
-            int e_hp = 0;
-            int e_attack = 0;
-            int e_defense = 0;
-
-            if (number == 0)
-            {
-                m_name = "スライム";
-                e_hp = 300;
-                e_attack = 100;
-                e_defense = 20;
-            }
-            else if (number == 1)
-            {
-                m_name = "スライムナイト";
-                e_hp = 400;
-                e_attack = 130;
-                e_defense = 30;
-            }
-            else if (number == 2)
-            {
-                m_name = "ゴーレム";
-                e_hp = 500;
-                e_attack = 140;
-                e_defense = 40;
-            }
-            else if (number == 3)
-            {
-                m_name = "キラーマシーン";
-                e_hp = 700;
-                e_attack = 150;
-                e_defense = 50;
-            }
-            else if (number == 4)
-            {
-                m_name = "ドラゴン";
-                e_hp = 1000;
-                e_attack = 180;
-                e_defense = 60;
-            }
-            else if (number == 5)
-            {
-                m_name = "魔王";
-                e_hp = 2000;
-                e_attack = 250;
-                e_defense = 70;
-            }
-
-            monster_name = m_name;
-            enemy_hp = e_hp;
-            enemy_attack = e_attack;
-            enemy_defense = e_defense;
+            number = random.Next(System.Enum.GetNames(typeof(Enum.EnemiesType)).Length);
+            
+            enemy.EnemyType = (Enum.EnemiesType)number;
+            enemy.Init();
+            monsterPictureBox.Image = Image.FromFile(enemy.ImageFile);
             Encount(waza1);
 
             //BattleFormロード時にフォーカスを攻撃ボタンに当てる
@@ -336,17 +286,17 @@ namespace LuckQuest
 
                 hero.MP = hero.MP - waza1;
                 mpTextBox2.Text = hero.MP.ToString();
-                enemy_hp = enemy_hp - waza1_damage;
-                logTextBox.AppendText(Environment.NewLine + waza1_message1 + Environment.NewLine + monster_name + waza1_message2);
-                logTextBox.AppendText(Environment.NewLine + monster_name + "に" + waza1_damage + "のダメージ！");
+                enemy.HP = enemy.HP - waza1_damage;
+                logTextBox.AppendText(Environment.NewLine + waza1_message1 + Environment.NewLine + enemy.Name + waza1_message2);
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + waza1_damage + "のダメージ！");
                 techniquePanel.Visible = false;
                 monsterPictureBox.Visible = false;
                 battlePictureBox.Image = Image.FromFile(image_file);
             }
 
-            if (enemy_hp <= 0)
+            if (enemy.HP <= 0)
             {
-                logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "を倒した！");
                 monsterPictureBox.Visible = false;
                 if (monsterPictureBox.Visible == false)
                 {
@@ -403,14 +353,14 @@ namespace LuckQuest
         /// </summary>
         public void Encount(int waza_mp)
         {
-            critical = enemy_attack * 2;
+            critical = enemy.Attack * 2;
             if (hero.MP < waza_mp)
             {
-                logTextBox.AppendText(Environment.NewLine + monster_name + "が現れた！" + Environment.NewLine + hero.Name + "はどうする？");
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "が現れた！" + Environment.NewLine + hero.Name + "はどうする？");
             }
             else
             {
-                logTextBox.Text = monster_name + "が現れた！" + Environment.NewLine + hero.Name + "はどうする？";
+                logTextBox.Text = enemy.Name + "が現れた！" + Environment.NewLine + hero.Name + "はどうする？";
             }
         }
 
@@ -425,14 +375,14 @@ namespace LuckQuest
             logTextBox.AppendText(Environment.NewLine + hero.Name + "の攻撃！");
             if (probability())
             {
-                logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + monster_name + "は砕け散った！");
-                enemy_hp = 0;
+                logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + enemy.Name + "は砕け散った！");
+                enemy.HP = 0;
             }
 
-            if (enemy_hp > 0)
+            if (enemy.HP > 0)
             {
                 //敵守備力から主人公攻撃力合計を減算
-                atk_sum = enemy_defense - sum;
+                atk_sum = enemy.Defense - sum;
 
                 //敵の守備が攻撃を上回った時
                 if (atk_sum >= 0)
@@ -444,9 +394,9 @@ namespace LuckQuest
                 {
                     atk_sum = -atk_sum;
                 }
-                enemy_hp = enemy_hp - atk_sum;
-                System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy_hp);
-                logTextBox.AppendText(Environment.NewLine + monster_name + "に" + atk_sum + "のダメージ!");
+                enemy.HP = enemy.HP - atk_sum;
+                System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy.HP);
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + atk_sum + "のダメージ!");
 
                 if (probability2())
                 {
@@ -463,7 +413,7 @@ namespace LuckQuest
                         enemy_atk_sum = -enemy_atk_sum;
                     }
 
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
+                    logTextBox.AppendText(Environment.NewLine + enemy.Name + "の攻撃！");
 
                     string message = "";
                     
@@ -491,13 +441,13 @@ namespace LuckQuest
                     {
                         message = "は魔王のオーラを放った！";
                     }
-                    logTextBox.AppendText(Environment.NewLine + monster_name + message);
+                    logTextBox.AppendText(Environment.NewLine + enemy.Name + message);
                     logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy_atk_sum + "のダメージ!");
                 }
                 else
                 {
                     //主人公守備力合計から敵攻撃力を減算
-                    enemy_atk_sum = sum2 - enemy_attack;
+                    enemy_atk_sum = sum2 - enemy.Attack;
 
                     //敵の攻撃が守備を下回った時
                     if (enemy_atk_sum >= 0)
@@ -509,7 +459,7 @@ namespace LuckQuest
                     {
                         enemy_atk_sum = -enemy_atk_sum;
                     }
-                    logTextBox.AppendText(Environment.NewLine + monster_name + "の攻撃！");
+                    logTextBox.AppendText(Environment.NewLine + enemy.Name + "の攻撃！");
                     logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy_atk_sum + "のダメージ!");
                 }
                 hero.HP = hero.HP - enemy_atk_sum;
@@ -536,7 +486,7 @@ namespace LuckQuest
             }
             else
             {
-                logTextBox.AppendText(Environment.NewLine + monster_name + "を倒した！");
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "を倒した！");
                 monsterPictureBox.Visible = false;
                 if (monsterPictureBox.Visible == false)
                 {
