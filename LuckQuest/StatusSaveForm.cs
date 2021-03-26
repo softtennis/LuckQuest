@@ -10,12 +10,17 @@ using System.Windows.Forms;
 
 namespace LuckQuest
 {
+    /// <summary>
+    /// ステータス登録画面のクラス
+    /// </summary>
     public partial class StatusSaveForm : Form
     {
-        string equip1_attack;
-        string equip2_defense;
-        string equip3_defense;
-        string equip4_defense;
+        int equip1_attack;
+        int equip2_defense;
+        int equip3_defense;
+        int equip4_defense;
+
+        Hero hero = new Hero();
 
         public StatusSaveForm()
         {
@@ -27,7 +32,10 @@ namespace LuckQuest
 
         }
 
-        
+        private void nameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            hero.Name = nameTextBox.Text;
+        } 
 
         public void jobButton_Click(object sender, EventArgs e)
         {
@@ -36,6 +44,7 @@ namespace LuckQuest
             var random = new Random();
             var number = random.Next(jobs.Length);
 
+            hero.Job = jobs[number];
             jobTextBox.Text = jobs[number];
             jobButton.Enabled = false;
         }
@@ -45,6 +54,7 @@ namespace LuckQuest
             var random = new Random();
             int number = random.Next(1, 101);
 
+            hero.Level = number;
             levelTextBox.Text = number.ToString();
             levelButton.Enabled = false;
         }
@@ -54,6 +64,7 @@ namespace LuckQuest
             var random = new Random();
             int number = random.Next(1, 101);
 
+            hero.Attack = number;
             attackTextBox.Text = number.ToString();
             attackButton.Enabled = false;
         }
@@ -63,6 +74,7 @@ namespace LuckQuest
             var random = new Random();
             int number = random.Next(1, 101);
 
+            hero.Defense = number;
             defenseTextBox.Text = number.ToString();
             defenseButton.Enabled = false;
         }
@@ -72,6 +84,7 @@ namespace LuckQuest
             var random = new Random();
             int number = random.Next(1, 1000);
 
+            hero.HP = number;
             hpTextBox.Text = number.ToString();
             hpButton.Enabled = false;
         }
@@ -81,6 +94,7 @@ namespace LuckQuest
             var random = new Random();
             int number = random.Next(1, 1000);
 
+            hero.MP = number;
             mpTextBox.Text = number.ToString();
             mpButton.Enabled = false;
         }
@@ -105,34 +119,29 @@ namespace LuckQuest
 
             if (number == 0)
             {
-                equip1_attack = "5";
+                equip1_attack = 5;
             }
-
-            if (number == 1)
+            else if (number == 1)
             {
-                equip1_attack = "10";
+                equip1_attack = 10;
             }
-
-            if (number == 2)
+            else if (number == 2)
             {
-                equip1_attack = "20";
+                equip1_attack = 20;
             }
-
-            if (number == 3)
+            else if (number == 3)
             {
-                equip1_attack = "30";
+                equip1_attack = 30;
             }
-
-            if (number == 4)
+            else if (number == 4)
             {
-                equip1_attack = "50";
+                equip1_attack = 50;
             }
-
-            if (number == 5)
+            else if (number == 5)
             {
-                equip1_attack = "100";
+                equip1_attack = 100;
             }
-
+            hero.WeaponAttack = equip1_attack;
         }
 
         private void equip2Button_Click(object sender, EventArgs e)
@@ -154,33 +163,29 @@ namespace LuckQuest
 
             if (number == 0)
             {
-                equip2_defense = "5";
+                equip2_defense = 5;
             }
-
-            if (number == 1)
+            else if (number == 1)
             {
-                equip2_defense = "10";
+                equip2_defense = 10;
             }
-
-            if (number == 2)
+            else if (number == 2)
             {
-                equip2_defense = "20";
+                equip2_defense = 20;
             }
-
-            if (number == 3)
+            else if (number == 3)
             {
-                equip2_defense = "30";
+                equip2_defense = 30;
             }
-
-            if (number == 4)
+            else if (number == 4)
             {
-                equip2_defense = "50";
+                equip2_defense = 50;
             }
-
-            if (number == 5)
+            else if (number == 5)
             {
-                equip2_defense = "100";
+                equip2_defense = 100;
             }
+            hero.WeaponAttack = equip2_defense;
         }
 
         private void equip3Button_Click(object sender, EventArgs e)
@@ -201,33 +206,29 @@ namespace LuckQuest
 
             if (number == 0)
             {
-                equip3_defense = "5";
+                equip3_defense = 5;
             }
-
-            if (number == 1)
+            else if (number == 1)
             {
-                equip3_defense = "10";
+                equip3_defense = 10;
             }
-
-            if (number == 2)
+            else if (number == 2)
             {
-                equip3_defense = "20";
+                equip3_defense = 20;
             }
-
-            if (number == 3)
+            else if (number == 3)
             {
-                equip3_defense = "30";
+                equip3_defense = 30;
             }
-
-            if (number == 4)
+            else if (number == 4)
             {
-                equip3_defense = "50";
+                equip3_defense = 50;
             }
-
-            if (number == 5)
+            else if (number == 5)
             {
-                equip3_defense = "100";
+                equip3_defense = 100;
             }
+            hero.WeaponAttack = equip3_defense;
         }
 
         private void equip4Button_Click(object sender, EventArgs e)
@@ -249,55 +250,38 @@ namespace LuckQuest
 
             if (number == 0)
             {
-                equip4_defense = "5";
+                equip4_defense = 5;
             }
-
-            if (number == 1)
+            else if (number == 1)
             {
-                equip4_defense = "10";
+                equip4_defense = 10;
             }
-
-            if (number == 2)
+            else if (number == 2)
             {
-                equip4_defense = "20";
+                equip4_defense = 20;
             }
-
-            if (number == 3)
+            else if (number == 3)
             {
-                equip4_defense = "30";
+                equip4_defense = 30;
             }
-
-            if (number == 4)
+            else if (number == 4)
             {
-                equip4_defense = "50";
+                equip4_defense = 50;
             }
-
-            if (number == 5)
+            else if (number == 5)
             {
-                equip4_defense = "100";
+                equip4_defense = 100;
             }
+            hero.WeaponAttack = equip4_defense;
         }
 
         private void battleButton_Click(object sender, EventArgs e)
         {
             BattleForm f = new BattleForm(   //クラスの中のコンストラクターを呼び出す。コンストラクターに対してはオーバーロードをよく使う。
-                this.nameTextBox.Text, 
-                this.jobTextBox.Text, 
-                this.levelTextBox.Text, 
-                this.attackTextBox.Text, 
-                this.defenseTextBox.Text, 
-                this.hpTextBox.Text, 
-                this.mpTextBox.Text,
-                equip1_attack, 
-                equip2_defense,
-                equip3_defense,
-                equip4_defense);
+                hero);
             f.ShowDialog();
 
             Init(); //初期化！ロードイベントやコンストラクタは、起動時にしか動かない。ShowDialogは、そのクラスの処理が終わったらここに帰ってくるんやで。
-            //int a = 0;
-            //a = 10 + 5;
-            //Console.WriteLine(a);
         }
 
         public void Init()

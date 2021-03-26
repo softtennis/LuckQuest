@@ -52,6 +52,7 @@
     <Compile Include="BattleForm.Designer.cs">
       <DependentUpon>BattleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hero.cs" />
     <Compile Include="StatusSaveForm.cs">
       <SubType>Form</SubType>
     </Compile>

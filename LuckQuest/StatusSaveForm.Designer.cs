@@ -387,12 +387,13 @@
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(279, 33);
             this.nameTextBox.TabIndex = 34;
+            this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
             // StatusSaveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 896);
+            this.ClientSize = new System.Drawing.Size(682, 710);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.battleButton);
