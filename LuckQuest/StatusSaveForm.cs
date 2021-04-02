@@ -185,7 +185,7 @@ namespace LuckQuest
             {
                 equip2_defense = 100;
             }
-            hero.WeaponAttack = equip2_defense;
+            hero.HelmetDefense = equip2_defense;
         }
 
         private void equip3Button_Click(object sender, EventArgs e)
@@ -228,7 +228,7 @@ namespace LuckQuest
             {
                 equip3_defense = 100;
             }
-            hero.WeaponAttack = equip3_defense;
+            hero.ArmorDefense = equip3_defense;
         }
 
         private void equip4Button_Click(object sender, EventArgs e)
@@ -272,7 +272,7 @@ namespace LuckQuest
             {
                 equip4_defense = 100;
             }
-            hero.WeaponAttack = equip4_defense;
+            hero.ShieldDefense = equip4_defense;
         }
 
         private void battleButton_Click(object sender, EventArgs e)

@@ -55,6 +55,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Hero.cs" />
+    <Compile Include="Job.cs" />
     <Compile Include="StatusSaveForm.cs">
       <SubType>Form</SubType>
     </Compile>

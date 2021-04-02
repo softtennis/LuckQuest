@@ -66,6 +66,11 @@ namespace LuckQuest
         /// </summary>
         public int ShieldDefense { get; set; }
 
+        /// <summary>
+        /// 敵守備力から主人公攻撃力と装備1攻撃力を減算した最終攻撃値
+        /// </summary>
+        public int AttackSum { get; set; }
+
         //将来の拡張を踏まえて用意
         /// <summary>
         /// コンストラクター
@@ -74,7 +79,22 @@ namespace LuckQuest
         {
 
         }
-    }
 
-    
+        public void AttackProcessing(int enemy_defense)
+        {
+            //敵守備力から主人公攻撃力合計を減算
+            AttackSum = enemy_defense - Attack - WeaponAttack;
+
+            //敵の守備が攻撃を上回った時
+            if (AttackSum >= 0)
+            {
+                AttackSum = 1;
+            }
+            //敵の守備が攻撃を下回った時
+            else
+            {
+                AttackSum = -AttackSum;
+            }
+        }
+    }
 }

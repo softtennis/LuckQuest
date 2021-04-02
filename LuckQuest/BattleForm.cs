@@ -15,28 +15,13 @@ namespace LuckQuest
     /// </summary>
     public partial class BattleForm : Form
     {
-
         //攻撃力+装備1の合計攻撃力・・・①
         private static int sum = 0;
         //守備力+装備2,3,4の合計守備力・・・②
         private static int sum2 = 0;
-        //敵守備力から①を減算
-        private static int atk_sum = 0;
         
         //敵番号
         private static int number = 0;
-        //敵名
-        //private static string monster_name;
-        //敵HP
-        //private static int enemy_hp = 0;
-        //敵攻撃力
-        //private static int enemy_attack = 0;
-        //敵守備力
-        //private static int enemy_defense = 0;
-        //②から敵攻撃力を減算
-        private static int enemy_atk_sum = 0;
-        //敵固有わざの攻撃力
-        private static int critical;
 
         int waza1 = 0;
         //int waza2 = 0;
@@ -57,43 +42,8 @@ namespace LuckQuest
 
         public void BattleFormLoad()
         {
+            //技使用のMP
             waza1 = 20;
-            //if (hero.Job == "勇者")
-            //{
-            //    waza1 = 20;
-            //    //waza2 = 30;
-            //    //waza3 = 40;
-            //}
-            //else if (hero.Job == "戦士")
-            //{
-            //    waza1 = 20;
-            //    //waza2 = 30;
-            //    //waza3 = 40;
-            //}
-            //else if (hero.Job == "盗賊")
-            //{
-            //    waza1 = 20;
-            //    //waza2 = 30;
-            //    //waza3 = 40;
-            //}
-            //else if (hero.Job == "遊び人")
-            //{
-            //    waza1 = 20;
-            //    //waza2 = 30;
-            //    //waza3 = 40;
-            //}
-            //else if (hero.Job == "魔法使い")
-            //{
-            //    waza1 = 20;
-            //    //waza2 = 30;
-            //    //waza3 = 40;
-            //}
-            //else if (hero.Job == "賢者")
-            //{
-            //    waza1 = 20;
-            //    //waza2 = 30;
-            //    //waza3 = 40;
-            //}
 
             sum = hero.Attack + hero.WeaponAttack;
             sum2 = hero.Defense + hero.HelmetDefense + hero.ArmorDefense + hero.ShieldDefense;
@@ -220,6 +170,7 @@ namespace LuckQuest
                 //    }
                 //}
             }
+            
             skillButton.Text = waza_name;
         }
 
@@ -302,20 +253,7 @@ namespace LuckQuest
                 {
                     attackButton.Enabled = false;
                 }
-                DialogResult dialogResult = MessageBox.Show(
-                    "世界は守られた。もう一度守りますか？",
-                    "GAME CLEAR",
-                    MessageBoxButtons.RetryCancel);
-                if (dialogResult == DialogResult.Retry)
-                {
-                    this.Close();
-                }
-                else if (dialogResult == DialogResult.Cancel)
-                {
-                    battlePictureBox.Image = Image.FromFile("haikei.png");
-                    techniqueButton.Enabled = false;
-                    logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                }
+                GameClearDialog();
             }
         }
 
@@ -353,7 +291,6 @@ namespace LuckQuest
         /// </summary>
         public void Encount(int waza_mp)
         {
-            critical = enemy.Attack * 2;
             if (hero.MP < waza_mp)
             {
                 logTextBox.AppendText(Environment.NewLine + enemy.Name + "が現れた！" + Environment.NewLine + hero.Name + "はどうする？");
@@ -381,107 +318,31 @@ namespace LuckQuest
 
             if (enemy.HP > 0)
             {
-                //敵守備力から主人公攻撃力合計を減算
-                atk_sum = enemy.Defense - sum;
-
-                //敵の守備が攻撃を上回った時
-                if (atk_sum >= 0)
-                {
-                    atk_sum = 1;
-                }
-                //敵の守備が攻撃を下回った時
-                else
-                {
-                    atk_sum = -atk_sum;
-                }
-                enemy.HP = enemy.HP - atk_sum;
-                System.Diagnostics.Debug.WriteLine("敵の残りHPは" + enemy.HP);
-                logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + atk_sum + "のダメージ!");
+                hero.AttackProcessing(enemy.Defense);
+                enemy.HP = enemy.HP - hero.AttackSum;
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + hero.AttackSum + "のダメージ!");
 
                 if (probability2())
                 {
-                    enemy_atk_sum = sum2 - critical;
-
-                    //敵の攻撃が守備を下回った時
-                    if (enemy_atk_sum >= 0)
-                    {
-                        enemy_atk_sum = 1;
-                    }
-                    //敵の攻撃が守備を上回った時
-                    else
-                    {
-                        enemy_atk_sum = -enemy_atk_sum;
-                    }
-
+                    enemy.EnemyCriticalProcessing(sum2);
                     logTextBox.AppendText(Environment.NewLine + enemy.Name + "の攻撃！");
-
-                    string message = "";
-                    
-                    if (number == 0)
-                    {
-                        message = "は勢いよく突進してきた！";
-                    }
-                    else if(number == 1)
-                    {
-                        message = "のコンビネーションアタック！";
-                    }
-                    else if (number == 2)
-                    {
-                        message = "は岩石を飛ばしてきた！";
-                    }
-                    else if (number == 3)
-                    {
-                        message = "の無数の刃が襲い掛かる！";
-                    }
-                    else if (number == 4)
-                    {
-                        message = "は猛烈な炎を噴き出した！";
-                    }
-                    else if (number == 5)
-                    {
-                        message = "は魔王のオーラを放った！";
-                    }
-                    logTextBox.AppendText(Environment.NewLine + enemy.Name + message);
-                    logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy_atk_sum + "のダメージ!");
+                    logTextBox.AppendText(Environment.NewLine + enemy.Name + enemy.Message);
+                    logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy.EnemyAttackSum + "のダメージ!");
                 }
                 else
                 {
-                    //主人公守備力合計から敵攻撃力を減算
-                    enemy_atk_sum = sum2 - enemy.Attack;
-
-                    //敵の攻撃が守備を下回った時
-                    if (enemy_atk_sum >= 0)
-                    {
-                        enemy_atk_sum = 1;
-                    }
-                    //敵の攻撃が守備を上回った時
-                    else
-                    {
-                        enemy_atk_sum = -enemy_atk_sum;
-                    }
+                    enemy.EnemyAttackProcessing(sum2);
                     logTextBox.AppendText(Environment.NewLine + enemy.Name + "の攻撃！");
-                    logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy_atk_sum + "のダメージ!");
+                    logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy.EnemyAttackSum + "のダメージ!");
                 }
-                hero.HP = hero.HP - enemy_atk_sum;
+                hero.HP = hero.HP - enemy.EnemyAttackSum;
                 hpTextBox2.Text = hero.HP.ToString();
+
                 if (hero.HP <= 0)
                 {
                     hpTextBox2.Text = "0";
                     logTextBox.AppendText(Environment.NewLine + hero.Name + "はやられてしまった…");
-                    DialogResult dialogResult = MessageBox.Show(
-                    "世界は闇に包まれた…。やり直しますか？",
-                    "GAME OVER",
-                    MessageBoxButtons.RetryCancel);
-                    if (dialogResult == DialogResult.Retry)
-                    {
-                        this.Close();
-                    }
-                    else if (dialogResult == DialogResult.Cancel)
-                    {
-                        attackButton.Enabled = false;
-                        techniqueButton.Enabled = false;
-                        logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
-                    }
+                    GameOverDialog();
                 }
             }
             else
@@ -493,18 +354,44 @@ namespace LuckQuest
                     attackButton.Enabled = false;
                     techniqueButton.Enabled = false;
                 }
-                DialogResult dialogResult = MessageBox.Show(
+                GameClearDialog();
+            }
+        }
+
+        public void GameClearDialog()
+        {
+            DialogResult dialogResult = MessageBox.Show(
                     "世界は守られた。もう一度守りますか？",
                     "GAME CLEAR",
                     MessageBoxButtons.RetryCancel);
-                if (dialogResult == DialogResult.Retry)
-                {
-                    this.Close();
-                }
-                else if (dialogResult == DialogResult.Cancel)
-                {
-                    logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
-                }
+            if (dialogResult == DialogResult.Retry)
+            {
+                this.Close();
+            }
+            else if (dialogResult == DialogResult.Cancel)
+            {
+                attackButton.Enabled = false;
+                techniqueButton.Enabled = false;
+                battlePictureBox.Image = Image.FromFile("haikei.png");
+                logTextBox.AppendText(Environment.NewLine + "世界は平和に包まれている…");
+            }
+        }
+
+        public void GameOverDialog()
+        {
+            DialogResult dialogResult = MessageBox.Show(
+                    "世界は闇に包まれた…。やり直しますか？",
+                    "GAME OVER",
+                    MessageBoxButtons.RetryCancel);
+            if (dialogResult == DialogResult.Retry)
+            {
+                this.Close();
+            }
+            else if (dialogResult == DialogResult.Cancel)
+            {
+                attackButton.Enabled = false;
+                techniqueButton.Enabled = false;
+                logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
             }
         }
     }
