@@ -29,13 +29,14 @@ namespace LuckQuest
 
         private Hero hero = new Hero();
         private Enemy enemy = new Enemy();
-        //private Enum type = new Enum();
+        private Job job = new Job();
 
-        public BattleForm(Hero Hero)
+        public BattleForm(Hero Hero, Job Job)
         {
             InitializeComponent();
 
             hero = Hero;
+            job = Job;
 
             BattleFormLoad();
         }
@@ -43,14 +44,14 @@ namespace LuckQuest
         public void BattleFormLoad()
         {
             //技使用のMP
-            waza1 = 20;
+            waza1 = job.Waza1Mp;
 
-            sum = hero.Attack + hero.WeaponAttack;
-            sum2 = hero.Defense + hero.HelmetDefense + hero.ArmorDefense + hero.ShieldDefense;
+            sum = hero.Attack + job.WeaponAttack;
+            sum2 = hero.Defense + job.HelmetDefense + job.ArmorDefense + job.ShieldDefense;
 
             //画面上部のステータスバーに、初期ステータス登録画面から受け取った値を反映
             nameTextBox2.Text = hero.Name;
-            jobTextBox2.Text = hero.Job;
+            jobTextBox2.Text = job.JobName;
             levelTextBox2.Text = hero.Level.ToString();
             hpTextBox2.Text = hero.HP.ToString();
             mpTextBox2.Text = hero.MP.ToString();
@@ -93,85 +94,8 @@ namespace LuckQuest
             techniquePanel.Visible = true;
             monsterPictureBox.Visible = true;
             battlePictureBox.Image = Image.FromFile("haikei.png");
-
-            string waza_name = "";
-
-            if (hero.Job == "勇者")
-            {
-                waza_name = "ライデイン（消費MP：20、攻撃力：200）";
-                //if(level >= 30)
-                //{
-                //    skillButton2.Visible = true;
-                //    skillButton2.Text = "ギガデイン";
-                //    if (level >= 50)
-                //    {
-                //        skillButton3.Visible = true;
-                //        skillButton3.Text = " ミナデイン";
-                //    }
-                //}
-            }
-            else if (hero.Job == "戦士")
-            {
-                waza_name = "魔人斬り（消費MP：20、攻撃力：200）";
-                //if (level >= 30)
-                //{
-                //    skillButton2.Visible = true;
-                //    skillButton2.Text = "鬼神斬り";
-                //    if (level >= 50)
-                //    {
-                //        skillButton3.Visible = true;
-                //        skillButton3.Text = "凶斬り";
-                //    }
-                //}
-            }
-            else if (hero.Job == "盗賊")
-            {
-                waza_name = "ポイズンダガー（消費MP：20、攻撃力：100）";
-                //if (level >= 30)
-                //{
-                //    skillButton2.Visible = true;
-                //    skillButton2.Text = "アサシンアタック";
-                //    if (level >= 50)
-                //    {
-                //        skillButton3.Visible = true;
-                //        skillButton3.Text = "ナイトメアファング";
-                //    }
-                //}
-            }
-            else if (hero.Job == "遊び人")
-            {
-                waza_name = "奇妙なダンス（使うと…？）";
-            }
-            else if (hero.Job == "魔法使い")
-            {
-                waza_name = "バギクロス（消費MP：20、攻撃力：200）";
-                //if (level >= 30)
-                //{
-                //    skillButton2.Visible = true;
-                //    skillButton2.Text = "バギムーチョ";
-                //    if (level >= 50)
-                //    {
-                //        skillButton3.Visible = true;
-                //        skillButton3.Text = "ベギラゴン";
-                //    }
-                //}
-            }
-            else if (hero.Job == "賢者")
-            {
-                waza_name = "イオナズン（消費MP：20、攻撃力：500）";
-                //if (level >= 30)
-                //{
-                //    skillButton2.Visible = true;
-                //    skillButton2.Text = "イオグランデ";
-                //    if (level >= 50)
-                //    {
-                //        skillButton3.Visible = true;
-                //        skillButton3.Text = "メラガイアー";
-                //    }
-                //}
-            }
-            
-            skillButton.Text = waza_name;
+            job.JobInit();
+            skillButton.Text = job.WazaName;
         }
 
         //わざボタン
@@ -186,63 +110,22 @@ namespace LuckQuest
             }
             else
             {
-                string waza1_message1 = "";
-                string waza1_message2 = "";
-                int waza1_damage = 0;
-                string image_file = "";
-
-                if (hero.Job == "勇者")
-                {
-                    waza1_message1 = "わざ発動！ライデイン！";
-                    waza1_message2 = "に稲光が走る！";
-                    waza1_damage = 200;
-                    image_file = "inaduma.gif";
-                }
-                else if (hero.Job == "戦士")
-                {
-                    waza1_message1 = "わざ発動！魔人斬り！";
-                    waza1_message2 = "に斬撃が襲う！";
-                    waza1_damage = 200;
-                    image_file = "majingiri.gif";
-                }
-                else if (hero.Job == "盗賊")
-                {
-                    waza1_message1 = "わざ発動！ポイズンダガー！";
-                    waza1_message2 = "に猛毒が迫る！";
-                    waza1_damage = 200;
-                    image_file = "doku.gif";
-                }
-                else if (hero.Job == "魔法使い")
-                {
-                    waza1_message1 = "わざ発動！バギクロス！";
-                    waza1_message2 = "に真空波が襲い掛かる！";
-                    waza1_damage = 200;
-                    image_file = "kaze.gif";
-                }
-                else if (hero.Job == "賢者")
-                {
-                    waza1_message1 = "わざ発動！イオナズン！";
-                    waza1_message2 = "も含め、辺り一帯が吹き飛んだ！";
-                    waza1_damage = 500;
-                    image_file = "bakuhatu.gif";
-                }
-                else if (hero.Job == "遊び人")
-                {
-                    waza1_message1 = "わざ発動！奇妙なダンス！";
-                    waza1_message2 = "にダメージは入らなかった！が、反省して賢者にjobチェンジした！";
-                    hero.Job = "賢者";
-                    jobTextBox2.Text = hero.Job + "(元遊び人)";
-                    image_file = "odori.gif";
-                }
-
                 hero.MP = hero.MP - waza1;
                 mpTextBox2.Text = hero.MP.ToString();
-                enemy.HP = enemy.HP - waza1_damage;
-                logTextBox.AppendText(Environment.NewLine + waza1_message1 + Environment.NewLine + enemy.Name + waza1_message2);
-                logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + waza1_damage + "のダメージ！");
+                enemy.HP = enemy.HP - job.Waza1Damage;
+                logTextBox.AppendText(Environment.NewLine + job.Waza1Message1 + Environment.NewLine + enemy.Name + job.Waza1Message2);
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + job.Waza1Damage + "のダメージ！");
                 techniquePanel.Visible = false;
                 monsterPictureBox.Visible = false;
-                battlePictureBox.Image = Image.FromFile(image_file);
+                battlePictureBox.Image = Image.FromFile(job.ImageFile);
+
+                if (job.JobType == Enum.JobsType.遊び人)
+                {
+                    job.JobType = Enum.JobsType.元遊び人;
+                    job.JobInit();
+                    jobTextBox2.Text = job.JobName;
+                    skillButton.Text = job.WazaName;
+                }
             }
 
             if (enemy.HP <= 0)
@@ -318,7 +201,7 @@ namespace LuckQuest
 
             if (enemy.HP > 0)
             {
-                hero.AttackProcessing(enemy.Defense);
+                hero.AttackProcessing(sum,enemy.Defense);
                 enemy.HP = enemy.HP - hero.AttackSum;
                 logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + hero.AttackSum + "のダメージ!");
 

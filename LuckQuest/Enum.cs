@@ -10,22 +10,27 @@ namespace LuckQuest
     {
         public enum EnemiesType
         {
-            スライム,
-            スライムナイト,
-            ゴーレム,
-            キラーマシン,
-            ドラゴン,
-            魔王
+            スライム=0,
+            スライムナイト=1,
+            ゴーレム=2,
+            キラーマシン=3,
+            ドラゴン=4,
+            魔王=5
         }
 
-        public enum JobType
+        /// <summary>
+        /// ジョブタイプ
+        /// 注意：職業追加の際は、元遊び人よりも前に追加すること
+        /// </summary>
+        public enum JobsType
         {
-            勇者,
-            戦士,
-            盗賊,
-            魔法使い,
-            賢者,
-            遊び人
+            勇者=0,
+            戦士=1,
+            盗賊=2,
+            魔法使い=3,
+            賢者=4,
+            遊び人=5,
+            元遊び人=99
         }
         //var enemy = EnemiesType.enemy1;
 

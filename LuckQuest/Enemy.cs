@@ -53,8 +53,6 @@ namespace LuckQuest
         /// </summary>
         public int EnemyAttackSum { get; set; }
 
-
-
         //将来の拡張を踏まえて用意
         /// <summary>
         /// コンストラクター

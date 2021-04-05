@@ -268,7 +268,7 @@
             this.equip4Button.Location = new System.Drawing.Point(515, 585);
             this.equip4Button.Name = "equip4Button";
             this.equip4Button.Size = new System.Drawing.Size(94, 32);
-            this.equip4Button.TabIndex = 23;
+            this.equip4Button.TabIndex = 31;
             this.equip4Button.Text = "選択";
             this.equip4Button.UseVisualStyleBackColor = true;
             this.equip4Button.Click += new System.EventHandler(this.equip4Button_Click);
@@ -278,7 +278,7 @@
             this.equip3Button.Location = new System.Drawing.Point(515, 532);
             this.equip3Button.Name = "equip3Button";
             this.equip3Button.Size = new System.Drawing.Size(94, 34);
-            this.equip3Button.TabIndex = 24;
+            this.equip3Button.TabIndex = 30;
             this.equip3Button.Text = "選択";
             this.equip3Button.UseVisualStyleBackColor = true;
             this.equip3Button.Click += new System.EventHandler(this.equip3Button_Click);
@@ -288,7 +288,7 @@
             this.equip2Button.Location = new System.Drawing.Point(515, 479);
             this.equip2Button.Name = "equip2Button";
             this.equip2Button.Size = new System.Drawing.Size(94, 33);
-            this.equip2Button.TabIndex = 25;
+            this.equip2Button.TabIndex = 29;
             this.equip2Button.Text = "選択";
             this.equip2Button.UseVisualStyleBackColor = true;
             this.equip2Button.Click += new System.EventHandler(this.equip2Button_Click);
@@ -298,7 +298,7 @@
             this.equip1Button.Location = new System.Drawing.Point(515, 429);
             this.equip1Button.Name = "equip1Button";
             this.equip1Button.Size = new System.Drawing.Size(94, 31);
-            this.equip1Button.TabIndex = 26;
+            this.equip1Button.TabIndex = 28;
             this.equip1Button.Text = "選択";
             this.equip1Button.UseVisualStyleBackColor = true;
             this.equip1Button.Click += new System.EventHandler(this.equip1Button_Click);
@@ -318,7 +318,7 @@
             this.hpButton.Location = new System.Drawing.Point(515, 335);
             this.hpButton.Name = "hpButton";
             this.hpButton.Size = new System.Drawing.Size(94, 33);
-            this.hpButton.TabIndex = 28;
+            this.hpButton.TabIndex = 26;
             this.hpButton.Text = "選択";
             this.hpButton.UseVisualStyleBackColor = true;
             this.hpButton.Click += new System.EventHandler(this.hpButton_Click);
@@ -328,7 +328,7 @@
             this.defenseButton.Location = new System.Drawing.Point(515, 284);
             this.defenseButton.Name = "defenseButton";
             this.defenseButton.Size = new System.Drawing.Size(94, 34);
-            this.defenseButton.TabIndex = 29;
+            this.defenseButton.TabIndex = 25;
             this.defenseButton.Text = "選択";
             this.defenseButton.UseVisualStyleBackColor = true;
             this.defenseButton.Click += new System.EventHandler(this.defenseButton_Click);
@@ -338,7 +338,7 @@
             this.attackButton.Location = new System.Drawing.Point(515, 234);
             this.attackButton.Name = "attackButton";
             this.attackButton.Size = new System.Drawing.Size(94, 32);
-            this.attackButton.TabIndex = 30;
+            this.attackButton.TabIndex = 24;
             this.attackButton.Text = "選択";
             this.attackButton.UseVisualStyleBackColor = true;
             this.attackButton.Click += new System.EventHandler(this.attackButton_Click);
@@ -348,7 +348,7 @@
             this.levelButton.Location = new System.Drawing.Point(515, 184);
             this.levelButton.Name = "levelButton";
             this.levelButton.Size = new System.Drawing.Size(94, 34);
-            this.levelButton.TabIndex = 31;
+            this.levelButton.TabIndex = 23;
             this.levelButton.Text = "選択";
             this.levelButton.UseVisualStyleBackColor = true;
             this.levelButton.Click += new System.EventHandler(this.levelButton_Click);
