@@ -55,6 +55,13 @@ namespace LuckQuest
 
         }
 
+        /// <summary>
+        /// AttackProcessing
+        /// 機能概要:主人公攻撃時の計算処理
+        /// 引数[hero_attack]
+        /// 引数[enemy_defense]
+        /// 戻り値:なし
+        /// </summary>
         public void AttackProcessing(int hero_attack ,int enemy_defense)
         {
             //敵守備力から主人公攻撃力合計を減算

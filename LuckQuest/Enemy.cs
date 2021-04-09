@@ -49,7 +49,7 @@ namespace LuckQuest
         public Enum.EnemiesType EnemyType { get; set; }
 
         /// <summary>
-        /// 
+        /// 主人公守備力合計から敵攻撃力を減算した値
         /// </summary>
         public int EnemyAttackSum { get; set; }
 
@@ -69,7 +69,7 @@ namespace LuckQuest
                 case Enum.EnemiesType.スライム:
                     Name = "スライム";
                     HP = 300;
-                    Attack = 100;
+                    Attack = 50;
                     Defense = 20;
                     ImageFile = "suraimu-removebg-preview.png";
                     Message = "は勢いよく突進してきた！";
@@ -77,7 +77,7 @@ namespace LuckQuest
                 case Enum.EnemiesType.スライムナイト:
                     Name = "スライムナイト";
                     HP = 400;
-                    Attack = 130;
+                    Attack = 65;
                     Defense = 30;
                     ImageFile = "suraimu_night-removebg-preview.png";
                     Message = "のコンビネーションアタック！";
@@ -85,7 +85,7 @@ namespace LuckQuest
                 case Enum.EnemiesType.ゴーレム:
                     Name = "ゴーレム";
                     HP = 500;
-                    Attack = 140;
+                    Attack = 70;
                     Defense = 40;
                     ImageFile = "goremu.png";
                     Message = "は岩石を飛ばしてきた！";
@@ -93,7 +93,7 @@ namespace LuckQuest
                 case Enum.EnemiesType.キラーマシン:
                     Name = "キラーマシン";
                     HP = 700;
-                    Attack = 150;
+                    Attack = 75;
                     Defense = 50;
                     ImageFile = "killer_micine.jpg";
                     Message = "の無数の刃が襲い掛かる！";
@@ -101,7 +101,7 @@ namespace LuckQuest
                 case Enum.EnemiesType.ドラゴン:
                     Name = "ドラゴン";
                     HP = 1000;
-                    Attack = 180;
+                    Attack = 90;
                     Defense = 60;
                     ImageFile = "dragon.png";
                     Message = "は猛烈な炎を噴き出した！";
@@ -109,7 +109,7 @@ namespace LuckQuest
                 case Enum.EnemiesType.魔王:
                     Name = "魔王";
                     HP = 2000;
-                    Attack = 250;
+                    Attack = 125;
                     Defense = 70;
                     ImageFile = "maou-removebg-preview.png";
                     Message = "は魔王のオーラを放った！";
@@ -118,6 +118,12 @@ namespace LuckQuest
             critical = Attack * 2;
         }
 
+        /// <summary>
+        /// EnemyAttackProcessing
+        /// 機能概要:敵攻撃時の計算処理
+        /// 引数[defense_sum]
+        /// 戻り値:なし
+        /// </summary>
         public void EnemyAttackProcessing(int defense_sum)
         {
             //主人公守備力合計から敵攻撃力を減算
@@ -135,8 +141,15 @@ namespace LuckQuest
             }
         }
 
+        /// <summary>
+        /// EnemyAttackProcessing
+        /// 機能概要:敵固有わざ発動時の計算処理
+        /// 引数[defense_sum]
+        /// 戻り値:なし
+        /// </summary>
         public void EnemyCriticalProcessing(int defense_sum)
         {
+            //主人公守備力合計から敵固有わざ攻撃力を減算
             EnemyAttackSum = defense_sum - critical;
 
             //敵の攻撃が守備を下回った時

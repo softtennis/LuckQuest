@@ -19,6 +19,16 @@ namespace LuckQuest
         public string WazaName { get; set; }
 
         /// <summary>
+        /// わざ名2
+        /// </summary>
+        public string WazaName2 { get; set; }
+
+        /// <summary>
+        /// わざ名3
+        /// </summary>
+        public string WazaName3 { get; set; }
+
+        /// <summary>
         /// わざ１メッセージ１
         /// </summary>
         public string Waza1Message1 { get; set; }
@@ -29,7 +39,27 @@ namespace LuckQuest
         public string Waza1Message2 { get; set; }
 
         /// <summary>
-        /// わざ１メッセージ２
+        /// わざ2メッセージ１
+        /// </summary>
+        public string Waza2Message1 { get; set; }
+
+        /// <summary>
+        /// わざ2メッセージ２
+        /// </summary>
+        public string Waza2Message2 { get; set; }
+
+        /// <summary>
+        /// わざ3メッセージ１
+        /// </summary>
+        public string Waza3Message1 { get; set; }
+
+        /// <summary>
+        /// わざ3メッセージ２
+        /// </summary>
+        public string Waza3Message2 { get; set; }
+
+        /// <summary>
+        /// わざにかかるMP
         /// </summary>
         public int Waza1Mp { get; set; }
 
@@ -39,9 +69,39 @@ namespace LuckQuest
         public int Waza1Damage { get; set; }
 
         /// <summary>
+        /// わざ２にかかるMP
+        /// </summary>
+        public int Waza2Mp { get; set; }
+
+        /// <summary>
+        ///わざ２ダメージ
+        /// </summary>
+        public int Waza2Damage { get; set; }
+
+        /// <summary>
+        /// わざ3にかかるMP
+        /// </summary>
+        public int Waza3Mp { get; set; }
+
+        /// <summary>
+        ///わざ3ダメージ
+        /// </summary>
+        public int Waza3Damage { get; set; }
+
+        /// <summary>
         /// わざ１のエフェクト画像
         /// </summary>
         public string ImageFile { get; set; }
+
+        /// <summary>
+        /// わざ2のエフェクト画像
+        /// </summary>
+        public string ImageFile2 { get; set; }
+
+        /// <summary>
+        /// わざ3のエフェクト画像
+        /// </summary>
+        public string ImageFile3 { get; set; }
 
         /// <summary>
         /// 装備1の名前
@@ -95,51 +155,111 @@ namespace LuckQuest
                 case Enum.JobsType.勇者:
                     JobName = "勇者";
                     WazaName = "ライデイン（消費MP：20、攻撃力：200）";
+                    WazaName2 = "ギガデイン（消費MP：40、攻撃力：500）";
+                    WazaName3 = "ミナデイン（消費MP：60、攻撃力：800）";
                     Waza1Message1 = "わざ発動！ライデイン！";
                     Waza1Message2 = "に稲光が走る！";
+                    Waza2Message1 = "わざ発動！ギガデイン！";
+                    Waza2Message2 = "に雷光が敵に降りかかる！";
+                    Waza3Message1 = "わざ発動！ミナデイン！";
+                    Waza3Message2 = "に光の龍が喰らいかかる！";
                     Waza1Mp = 20;
                     Waza1Damage = 200;
+                    Waza2Mp = 40;
+                    Waza2Damage = 500;
+                    Waza3Mp = 60;
+                    Waza3Damage = 800;
                     ImageFile = "inaduma.gif";
+                    ImageFile2 ="gigadein.gif";
+                    ImageFile3 ="baouzakeruga.gif";
                     Equip();
                     break;
                 case Enum.JobsType.戦士:
                     JobName = "戦士";
                     WazaName = "魔人斬り（消費MP：30、攻撃力：300）";
+                    WazaName2 = "鬼神斬り（消費MP：45、攻撃力：600）";
+                    WazaName3 = "神斬り（消費MP：70、攻撃力：900）";
                     Waza1Message1 = "わざ発動！魔人斬り！";
                     Waza1Message2 = "に斬撃が襲う！";
+                    Waza2Message1 = "わざ発動！鬼神斬り！";
+                    Waza2Message2 = "に鬼のような勢いで斬りかかる！";
+                    Waza3Message1 = "わざ発動！！神斬り";
+                    Waza3Message2 = "に神をも絶つ斬撃が放たれる！";
                     Waza1Mp = 30;
                     Waza1Damage = 300;
+                    Waza2Mp = 45;
+                    Waza2Damage = 600;
+                    Waza3Mp = 70;
+                    Waza3Damage = 900;
                     ImageFile = "majingiri.gif";
+                    ImageFile2 = "kijin.gif";
+                    ImageFile3 = "kami.gif";
                     Equip();
                     break;
                 case Enum.JobsType.盗賊:
                     JobName = "盗賊";
                     WazaName = "ポイズンダガー（消費MP：10、攻撃力：150）";
+                    WazaName2 = "アサシンアタック（消費MP：40、攻撃力：500）";
+                    WazaName3 = "盗む（消費MP：80、攻撃力：800）";
                     Waza1Message1 = "わざ発動！ポイズンダガー！";
                     Waza1Message2 = "に猛毒が迫る！";
+                    Waza2Message1 = "わざ発動！アサシンアタック！";
+                    Waza2Message2 = "に暗殺術を畳み掛ける！";
+                    Waza3Message1 = "わざ発動！盗む！";
+                    Waza3Message2 = "の心を盗んだ！";
                     Waza1Mp = 10;
                     Waza1Damage = 150;
+                    Waza2Mp = 40;
+                    Waza2Damage = 500;
+                    Waza3Mp = 80;
+                    Waza3Damage = 800;
                     ImageFile = "doku.gif";
+                    ImageFile2 = "asasin.gif";
+                    ImageFile3 = "nusumu.gif";
                     Equip();
                     break;
                 case Enum.JobsType.魔法使い:
                     JobName = "魔法使い";
                     WazaName = "バギクロス（消費MP：35、攻撃力：400）";
+                    WazaName2 = "バギムーチョ（消費MP：40、攻撃力：500）";
+                    WazaName3 = "血祭（消費MP：100、攻撃力：1000）";
                     Waza1Message1 = "わざ発動！バギクロス！";
                     Waza1Message2 = "に真空波が襲い掛かる！";
+                    Waza2Message1 = "わざ発動！バギムーチョ！";
+                    Waza2Message2 = "に台風があああああああああああ！";
+                    Waza3Message1 = "わざ発動！血祭！";
+                    Waza3Message2 = "に魔法使いとは思えない技が繰り広げられる！";
                     Waza1Mp = 35;
                     Waza1Damage = 400;
+                    Waza2Mp = 40;
+                    Waza2Damage = 500;
+                    Waza3Mp = 100;
+                    Waza3Damage = 1000;
                     ImageFile = "kaze.gif";
+                    ImageFile2 = "kaze3.gif";
+                    ImageFile3 = "misetakunaiyo.png";
                     Equip();
                     break;
                 case Enum.JobsType.賢者:
                     JobName = "賢者";
                     WazaName = "イオナズン（消費MP：40、攻撃力：500）";
+                    WazaName2 = "イオグランデ（消費MP：40、攻撃力：500）";
+                    WazaName3 = "エクスプロージョン（消費MP：120、攻撃力：1200）";
                     Waza1Message1 = "わざ発動！イオナズン！";
                     Waza1Message2 = "も含め、辺り一帯が吹き飛んだ！";
+                    Waza2Message1 = "わざ発動！イオグランデ！";
+                    Waza2Message2 = "は爆発で割れた大地に落ちた！";
+                    Waza3Message1 = "わざ発動！エクスプロージョン！";
+                    Waza3Message2 = "もろとも勢いのあまり世界が滅びかけた！";
                     Waza1Mp = 40;
                     Waza1Damage = 500;
+                    Waza2Mp = 40;
+                    Waza2Damage = 500;
+                    Waza3Mp = 120;
+                    Waza3Damage = 1200;
                     ImageFile = "bakuhatu.gif";
+                    ImageFile2 = "bakuhatu3.gif";
+                    ImageFile3 = "bakuhatu2.gif";
                     Equip();
                     break;
                 case Enum.JobsType.遊び人:
@@ -155,11 +275,23 @@ namespace LuckQuest
                 case Enum.JobsType.元遊び人:
                     JobName = "賢者（元遊び人）";
                     WazaName = "イオナズン（消費MP：30、攻撃力：1000）";
+                    WazaName2 = "イオグランデ（消費MP：40、攻撃力：1500）";
+                    WazaName3 = "エクスプロージョン（消費MP：50、攻撃力：2000）";
                     Waza1Message1 = "わざ発動！イオナズン！";
                     Waza1Message2 = "も含め、辺り一帯が地獄のような惨状に！"+ Environment.NewLine + "反省した男は強いぞ！";
+                    Waza2Message1 = "わざ発動！イオグランデ！";
+                    Waza2Message2 = "は爆裂魔法の恐怖のあまり半泣きだ！";
+                    Waza3Message1 = "わざ発動！エクスプロージョン！";
+                    Waza3Message2 = "よ、滅びよ…";
                     Waza1Mp = 30;
                     Waza1Damage = 1000;
+                    Waza2Mp = 40;
+                    Waza2Damage = 1500;
+                    Waza3Mp = 50;
+                    Waza3Damage = 2000;
                     ImageFile = "bakuhatu.gif";
+                    ImageFile2 = "bakuhatu3.gif";
+                    ImageFile3 = "bakuhatu2.gif";
                     break;
             }
         }

@@ -44,7 +44,7 @@
             this.levelLabel2 = new System.Windows.Forms.Label();
             this.nameTextBox2 = new System.Windows.Forms.TextBox();
             this.battlePictureBox = new System.Windows.Forms.PictureBox();
-            this.monsterPictureBox = new System.Windows.Forms.PictureBox();
+            this.monsterPictureBox1 = new System.Windows.Forms.PictureBox();
             this.attackButton = new System.Windows.Forms.Button();
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.techniqueButton = new System.Windows.Forms.Button();
@@ -53,10 +53,15 @@
             this.skillButton2 = new System.Windows.Forms.Button();
             this.skillButton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.monsterPictureBox2 = new System.Windows.Forms.PictureBox();
+            this.monsterPictureBox3 = new System.Windows.Forms.PictureBox();
+            this.autoButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.battlePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox1)).BeginInit();
             this.techniquePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // jobTextBox2
@@ -186,7 +191,7 @@
             this.nameTextBox2.Location = new System.Drawing.Point(70, 42);
             this.nameTextBox2.Name = "nameTextBox2";
             this.nameTextBox2.ReadOnly = true;
-            this.nameTextBox2.Size = new System.Drawing.Size(101, 25);
+            this.nameTextBox2.Size = new System.Drawing.Size(159, 25);
             this.nameTextBox2.TabIndex = 4;
             // 
             // battlePictureBox
@@ -199,14 +204,14 @@
             this.battlePictureBox.TabIndex = 5;
             this.battlePictureBox.TabStop = false;
             // 
-            // monsterPictureBox
+            // monsterPictureBox1
             // 
-            this.monsterPictureBox.Location = new System.Drawing.Point(352, 326);
-            this.monsterPictureBox.Name = "monsterPictureBox";
-            this.monsterPictureBox.Size = new System.Drawing.Size(113, 126);
-            this.monsterPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.monsterPictureBox.TabIndex = 6;
-            this.monsterPictureBox.TabStop = false;
+            this.monsterPictureBox1.Location = new System.Drawing.Point(352, 326);
+            this.monsterPictureBox1.Name = "monsterPictureBox1";
+            this.monsterPictureBox1.Size = new System.Drawing.Size(113, 126);
+            this.monsterPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.monsterPictureBox1.TabIndex = 6;
+            this.monsterPictureBox1.TabStop = false;
             // 
             // attackButton
             // 
@@ -246,31 +251,36 @@
             this.techniquePanel.Controls.Add(this.skillButton);
             this.techniquePanel.Location = new System.Drawing.Point(258, 512);
             this.techniquePanel.Name = "techniquePanel";
-            this.techniquePanel.Size = new System.Drawing.Size(544, 151);
+            this.techniquePanel.Size = new System.Drawing.Size(552, 151);
             this.techniquePanel.TabIndex = 15;
             this.techniquePanel.Visible = false;
             // 
             // skillButton3
             // 
-            this.skillButton3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.skillButton3.Location = new System.Drawing.Point(370, 0);
+            this.skillButton3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.skillButton3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.skillButton3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.skillButton3.Location = new System.Drawing.Point(367, 0);
             this.skillButton3.Name = "skillButton3";
-            this.skillButton3.Size = new System.Drawing.Size(175, 151);
+            this.skillButton3.Size = new System.Drawing.Size(185, 151);
             this.skillButton3.TabIndex = 2;
             this.skillButton3.Text = "わざ名";
-            this.skillButton3.UseVisualStyleBackColor = true;
+            this.skillButton3.UseVisualStyleBackColor = false;
             this.skillButton3.Visible = false;
+            this.skillButton3.Click += new System.EventHandler(this.skillButton3_Click);
             // 
             // skillButton2
             // 
+            this.skillButton2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.skillButton2.Dock = System.Windows.Forms.DockStyle.Left;
             this.skillButton2.Location = new System.Drawing.Point(185, 0);
             this.skillButton2.Name = "skillButton2";
             this.skillButton2.Size = new System.Drawing.Size(185, 151);
             this.skillButton2.TabIndex = 1;
             this.skillButton2.Text = "わざ名";
-            this.skillButton2.UseVisualStyleBackColor = true;
+            this.skillButton2.UseVisualStyleBackColor = false;
             this.skillButton2.Visible = false;
+            this.skillButton2.Click += new System.EventHandler(this.skillButton2_Click);
             // 
             // skillButton
             // 
@@ -288,16 +298,46 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.skillButton_Click);
             // 
+            // monsterPictureBox2
+            // 
+            this.monsterPictureBox2.Location = new System.Drawing.Point(569, 326);
+            this.monsterPictureBox2.Name = "monsterPictureBox2";
+            this.monsterPictureBox2.Size = new System.Drawing.Size(113, 126);
+            this.monsterPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.monsterPictureBox2.TabIndex = 16;
+            this.monsterPictureBox2.TabStop = false;
+            // 
+            // monsterPictureBox3
+            // 
+            this.monsterPictureBox3.Location = new System.Drawing.Point(144, 326);
+            this.monsterPictureBox3.Name = "monsterPictureBox3";
+            this.monsterPictureBox3.Size = new System.Drawing.Size(113, 126);
+            this.monsterPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.monsterPictureBox3.TabIndex = 17;
+            this.monsterPictureBox3.TabStop = false;
+            // 
+            // autoButton
+            // 
+            this.autoButton.Location = new System.Drawing.Point(852, 353);
+            this.autoButton.Name = "autoButton";
+            this.autoButton.Size = new System.Drawing.Size(75, 41);
+            this.autoButton.TabIndex = 18;
+            this.autoButton.Text = "オート";
+            this.autoButton.UseVisualStyleBackColor = true;
+            // 
             // BattleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(892, 687);
+            this.ClientSize = new System.Drawing.Size(963, 687);
+            this.Controls.Add(this.autoButton);
+            this.Controls.Add(this.monsterPictureBox3);
+            this.Controls.Add(this.monsterPictureBox2);
             this.Controls.Add(this.techniquePanel);
             this.Controls.Add(this.techniqueButton);
             this.Controls.Add(this.logTextBox);
             this.Controls.Add(this.attackButton);
-            this.Controls.Add(this.monsterPictureBox);
+            this.Controls.Add(this.monsterPictureBox1);
             this.Controls.Add(this.battlePictureBox);
             this.Controls.Add(this.nameTextBox2);
             this.Controls.Add(this.panel1);
@@ -308,8 +348,10 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.battlePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox1)).EndInit();
             this.techniquePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monsterPictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,14 +373,17 @@
         private System.Windows.Forms.Label mpLabel2;
         private System.Windows.Forms.Label hpLabel2;
         private System.Windows.Forms.PictureBox battlePictureBox;
-        private System.Windows.Forms.PictureBox monsterPictureBox;
+        private System.Windows.Forms.PictureBox monsterPictureBox1;
         private System.Windows.Forms.Button attackButton;
         private System.Windows.Forms.TextBox logTextBox;
         private System.Windows.Forms.Button techniqueButton;
         private System.Windows.Forms.Panel techniquePanel;
         private System.Windows.Forms.Button skillButton;
-        private System.Windows.Forms.Button skillButton3;
         private System.Windows.Forms.Button skillButton2;
+        private System.Windows.Forms.Button skillButton3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.PictureBox monsterPictureBox2;
+        private System.Windows.Forms.PictureBox monsterPictureBox3;
+        private System.Windows.Forms.Button autoButton;
     }
 }

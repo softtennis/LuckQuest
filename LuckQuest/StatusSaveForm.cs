@@ -31,6 +31,10 @@ namespace LuckQuest
         private void nameTextBox_TextChanged(object sender, EventArgs e)
         {
             hero.Name = nameTextBox.Text;
+            if(hero.Name == "キクヌンティウス")
+            {
+                SettingInit();
+            }
         } 
 
         public void jobButton_Click(object sender, EventArgs e)
@@ -97,59 +101,88 @@ namespace LuckQuest
 
         private void equip1Button_Click(object sender, EventArgs e)
         {
-            equip1TextBox.Text = job.Weapon;
-            equip1Button.Enabled = false;
             if (jobButton.Enabled == true)
             {
                 announcement();
                 equip1Button.Enabled = true;
                 this.ActiveControl = equip1Button;
             }
+            else
+            {
+                equip1TextBox.Text = job.Weapon;
+                equip1Button.Enabled = false;
+            }
         }
 
         private void equip2Button_Click(object sender, EventArgs e)
         {
-            equip2TextBox.Text = job.Helmet;
-            equip2Button.Enabled = false;
             if (jobButton.Enabled == true)
             {
                 announcement();
                 equip2Button.Enabled = true;
                 this.ActiveControl = equip2Button;
             }
+            else
+            {
+                equip2TextBox.Text = job.Helmet;
+                equip2Button.Enabled = false;
+            }
         }
 
         private void equip3Button_Click(object sender, EventArgs e)
         {
-            equip3TextBox.Text = job.Armor;
-            equip3Button.Enabled = false;
             if (jobButton.Enabled == true)
             {
                 announcement();
                 equip3Button.Enabled = true;
                 this.ActiveControl = equip3Button;
             }
+            else
+            {
+                equip3TextBox.Text = job.Armor;
+                equip3Button.Enabled = false;
+            }
         }
 
         private void equip4Button_Click(object sender, EventArgs e)
         {
-            equip4TextBox.Text = job.Shield;
-            equip4Button.Enabled = false;
             if (jobButton.Enabled == true)
             {
                 announcement();
                 equip4Button.Enabled = true;
                 this.ActiveControl = equip4Button;
             }
+            else
+            {
+                equip4TextBox.Text = job.Shield;
+                equip4Button.Enabled = false;
+            }
         }
 
         private void battleButton_Click(object sender, EventArgs e)
         {
-            BattleForm f = new BattleForm(   //クラスの中のコンストラクターを呼び出す。コンストラクターに対してはオーバーロードをよく使う。
-                hero,job);
-            f.ShowDialog();
-
-            Init(); //初期化！ロードイベントやコンストラクタは、起動時にしか動かない。ShowDialogは、そのクラスの処理が終わったらここに帰ってくるんやで。
+            if (nameTextBox.Text == "" ||
+                jobButton.Enabled == true ||
+                levelButton.Enabled == true ||
+                attackButton.Enabled == true ||
+                defenseButton.Enabled == true ||
+                hpButton.Enabled == true ||
+                mpButton.Enabled == true ||
+                equip1Button.Enabled == true ||
+                equip2Button.Enabled == true ||
+                equip3Button.Enabled == true ||
+                equip4Button.Enabled == true)
+            {
+                announcement2();
+                this.ActiveControl = battleButton;
+            }
+            else
+            {
+                BattleForm f = new BattleForm(   //クラスの中のコンストラクターを呼び出す。コンストラクターに対してはオーバーロードをよく使う。
+                hero, job);
+                f.ShowDialog();
+                Init(); //初期化！ロードイベントやコンストラクタは、起動時にしか動かない。ShowDialogは、そのクラスの処理が終わったらここに帰ってくるんやで。
+            }  
         }
 
         public void Init()
@@ -178,12 +211,56 @@ namespace LuckQuest
             equip4Button.Enabled = true;
         }
 
+        public void SettingInit()
+        {
+            jobTextBox.Text = "勇者";
+            job.JobType = (Enum.JobsType)0;
+            job.JobInit();
+            levelTextBox.Text = "100";
+            hero.Level = 100;
+            attackTextBox.Text = "50";
+            hero.Attack = 50;
+            defenseTextBox.Text = "50";
+            hero.Defense = 50;
+            hpTextBox.Text = "9";
+            hero.HP = 9;
+            mpTextBox.Text = "999";
+            hero.MP = 999;
+            equip1TextBox.Text = "伝説の剣(攻撃 + 100)";
+            job.WeaponAttack = 100;
+            equip2TextBox.Text = "伝説の兜(防御+100)";
+            job.HelmetDefense = 100;
+            equip3TextBox.Text = "伝説の鎧(防御+100)";
+            job.ArmorDefense = 100;
+            equip4TextBox.Text = "伝説の盾(防御 + 100)";
+            job.ShieldDefense = 100;
+
+            jobButton.Enabled = false;
+            levelButton.Enabled = false;
+            attackButton.Enabled = false;
+            defenseButton.Enabled = false;
+            hpButton.Enabled = false;
+            mpButton.Enabled = false;
+            equip1Button.Enabled = false;
+            equip2Button.Enabled = false;
+            equip3Button.Enabled = false;
+            equip4Button.Enabled = false;
+        }
+
         public void announcement()
         {
             DialogResult dialogResult = MessageBox.Show(
                     "選ばれし者よ…職業を選択せよ…",
                     "神の警告",
-                    MessageBoxButtons.YesNo);
+                    MessageBoxButtons.OK);
+        }
+
+        public void announcement2()
+        {
+            DialogResult dialogResult = MessageBox.Show(
+                    "選ばれし者よ…未入力箇所を入力せよ…",
+                    "神の警告",
+                    MessageBoxButtons.OK);
         }
     }
 }

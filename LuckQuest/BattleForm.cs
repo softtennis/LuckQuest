@@ -22,14 +22,33 @@ namespace LuckQuest
         
         //敵番号
         private static int number = 0;
+        private static int number2 = 0;
+        private static int number3 = 0;
 
-        int waza1 = 0;
-        //int waza2 = 0;
-        //int waza3 = 0;
+        int waza = 0;
+        int waza_damage = 0;
+        string waza_message1 = "";
+        string waza_message2 = "";
+        string gif_image = "";
 
         private Hero hero = new Hero();
-        private Enemy enemy = new Enemy();
+        private static Enemy enemy = new Enemy();
+        private static Enemy enemy2 = new Enemy();
+        private static Enemy enemy3 = new Enemy();
         private Job job = new Job();
+        private Random random = new Random();
+
+        //var enemyDictionary = new Dictionary<string, Enemy>();
+
+        bool enemy_delete_flg1 = true;
+        bool enemy_delete_flg2 = true;
+        bool enemy_delete_flg3 = true;
+
+        bool enemy_survival_flg1 = true;
+        bool enemy_survival_flg2 = true;
+        bool enemy_survival_flg3 = true;
+
+        bool dialog_flg = true;
 
         public BattleForm(Hero Hero, Job Job)
         {
@@ -44,7 +63,7 @@ namespace LuckQuest
         public void BattleFormLoad()
         {
             //技使用のMP
-            waza1 = job.Waza1Mp;
+            waza = job.Waza1Mp;
 
             sum = hero.Attack + job.WeaponAttack;
             sum2 = hero.Defense + job.HelmetDefense + job.ArmorDefense + job.ShieldDefense;
@@ -58,7 +77,7 @@ namespace LuckQuest
         　　attackTextBox2.Text = sum.ToString();
             defenseTextBox2.Text = sum2.ToString();
 
-            if (hero.MP < waza1)
+            if (hero.MP < waza)
             {
                 logTextBox.Text = "運がない！" + Environment.NewLine + hero.Name + "はわざを使えるほどMPがない！最悪だ！";
             }
@@ -69,11 +88,22 @@ namespace LuckQuest
             //敵画像ファイルをランダムに描画
             var random = new Random();
             number = random.Next(System.Enum.GetNames(typeof(Enum.EnemiesType)).Length);
-            
+            number2 = random.Next(System.Enum.GetNames(typeof(Enum.EnemiesType)).Length);
+            number3 = random.Next(System.Enum.GetNames(typeof(Enum.EnemiesType)).Length);
+
             enemy.EnemyType = (Enum.EnemiesType)number;
             enemy.Init();
-            monsterPictureBox.Image = Image.FromFile(enemy.ImageFile);
-            Encount(waza1);
+            monsterPictureBox1.Image = Image.FromFile(enemy.ImageFile);
+
+            enemy2.EnemyType = (Enum.EnemiesType)number2;
+            enemy2.Init();
+            monsterPictureBox2.Image = Image.FromFile(enemy2.ImageFile);
+
+            enemy3.EnemyType = (Enum.EnemiesType)number3;
+            enemy3.Init();
+            monsterPictureBox3.Image = Image.FromFile(enemy3.ImageFile);
+
+            Encount(waza);
 
             //BattleFormロード時にフォーカスを攻撃ボタンに当てる
             this.ActiveControl = attackButton;
@@ -83,70 +113,43 @@ namespace LuckQuest
         private void attackButton_Click(object sender, EventArgs e)
         {
             techniquePanel.Visible = false;
-            monsterPictureBox.Visible = true;
+
+            DisplayEnemy();
+
             battlePictureBox.Image = Image.FromFile("haikei.png");
             Attack();
         }
 
-        //職業ごとに技名を設定
+        //職業ごとにわざ名を表示する
         private void techniqueButton_Click(object sender, EventArgs e)
         {
+            //わざ名の書かれたパネルを表示する
             techniquePanel.Visible = true;
-            monsterPictureBox.Visible = true;
+
+            DisplayEnemy();
+
+            //背景画像を戦闘背景に戻す
             battlePictureBox.Image = Image.FromFile("haikei.png");
-            job.JobInit();
+
             skillButton.Text = job.WazaName;
-        }
-
-        //わざボタン
-        private void skillButton_Click(object sender, EventArgs e)
-        {
-            monsterPictureBox.Visible = true;
-            battlePictureBox.Image = Image.FromFile("haikei.png");
-            if (hero.MP < waza1)
+            if (hero.Level >= 50)
             {
-                logTextBox.AppendText(Environment.NewLine + "MPが足りない！");
-                techniquePanel.Visible = false;
-            }
-            else
-            {
-                hero.MP = hero.MP - waza1;
-                mpTextBox2.Text = hero.MP.ToString();
-                enemy.HP = enemy.HP - job.Waza1Damage;
-                logTextBox.AppendText(Environment.NewLine + job.Waza1Message1 + Environment.NewLine + enemy.Name + job.Waza1Message2);
-                logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + job.Waza1Damage + "のダメージ！");
-                techniquePanel.Visible = false;
-                monsterPictureBox.Visible = false;
-                battlePictureBox.Image = Image.FromFile(job.ImageFile);
-
-                if (job.JobType == Enum.JobsType.遊び人)
+                skillButton2.Text = job.WazaName2;
+                skillButton2.Visible = true;
+                if (hero.Level >= 80)
                 {
-                    job.JobType = Enum.JobsType.元遊び人;
-                    job.JobInit();
-                    jobTextBox2.Text = job.JobName;
-                    skillButton.Text = job.WazaName;
+                    skillButton3.Text = job.WazaName3;
+                    skillButton3.Visible = true;
                 }
-            }
-
-            if (enemy.HP <= 0)
-            {
-                logTextBox.AppendText(Environment.NewLine + enemy.Name + "を倒した！");
-                monsterPictureBox.Visible = false;
-                if (monsterPictureBox.Visible == false)
-                {
-                    attackButton.Enabled = false;
-                }
-                GameClearDialog();
             }
         }
 
         //確率(5%)判定
-        private bool probability()
+        private bool Probability()
         {
-            var random = new Random();
             var number = random.Next(1, 101);
 
-            if (number <= 3)
+            if (number <= 5)
             {
                 return true;
             }
@@ -154,9 +157,8 @@ namespace LuckQuest
         }
 
         //確率(25%)判定
-        private bool probability2()
+        private bool Probability2()
         {
-            var random = new Random();
             var number = random.Next(1, 101);
 
             if (number <= 25)
@@ -180,7 +182,51 @@ namespace LuckQuest
             }
             else
             {
-                logTextBox.Text = enemy.Name + "が現れた！" + Environment.NewLine + hero.Name + "はどうする？";
+                if (hero.Name == "キクヌンティウス")
+                {
+                    logTextBox.Text = hero.Name + "様が降臨なされたぞ…！";
+                    logTextBox.AppendText(Environment.NewLine + enemy.Name + "が現れた！" + Environment.NewLine + hero.Name + "様はどうする？");
+                }
+                else
+                {
+                    logTextBox.Text = enemy.Name + "が現れた！" + Environment.NewLine + hero.Name + "はどうする？";
+                }
+            }
+        }
+
+        /// <summary>
+        /// DisplayEnemy
+        /// 機能概要:モンスターのHPが0より大きい時、そのモンスターを表示する
+        /// 引数:なし
+        /// 戻り値:なし
+        /// </summary>
+        public void DisplayEnemy()
+        {
+            if (enemy.HP > 0)
+            {
+                monsterPictureBox1.Visible = true;
+            }
+            else
+            {
+                monsterPictureBox1.Visible = false;
+            }
+
+            if (enemy2.HP > 0)
+            {
+                monsterPictureBox2.Visible = true;
+            }
+            else
+            {
+                monsterPictureBox2.Visible = false;
+            }
+
+            if (enemy3.HP > 0)
+            {
+                monsterPictureBox3.Visible = true;
+            }
+            else
+            {
+                monsterPictureBox3.Visible = false;
             }
         }
 
@@ -193,46 +239,202 @@ namespace LuckQuest
         public void Attack()
         {
             logTextBox.AppendText(Environment.NewLine + hero.Name + "の攻撃！");
-            if (probability())
+
+            //5%の確率で敵を一撃必殺
+            if (Probability() && enemy.HP > 0)
             {
                 logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + enemy.Name + "は砕け散った！");
                 enemy.HP = 0;
+                monsterPictureBox1.Visible = false;
+                enemy_survival_flg1 = false;
             }
 
-            if (enemy.HP > 0)
+            //敵1が生存しているとき、主人公の攻撃を行う
+            if (enemy_survival_flg1)
             {
-                hero.AttackProcessing(sum,enemy.Defense);
-                enemy.HP = enemy.HP - hero.AttackSum;
+                //主人公が敵に攻撃
+                hero.AttackProcessing(sum, enemy.Defense);
                 logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + hero.AttackSum + "のダメージ!");
+                enemy.HP = enemy.HP - hero.AttackSum;
+            }
 
-                if (probability2())
+            //敵の生死判定
+            if (enemy.HP <= 0)
+            {
+                enemy_survival_flg1 = false;
+            }
+
+            //敵が生存しているとき、敵の攻撃を行う
+            if (enemy_survival_flg1)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "の攻撃！");
+                if (Probability2())
                 {
+                    //敵固有わざの計算処理
                     enemy.EnemyCriticalProcessing(sum2);
-                    logTextBox.AppendText(Environment.NewLine + enemy.Name + "の攻撃！");
+                    //敵固有わざのメッセージ
                     logTextBox.AppendText(Environment.NewLine + enemy.Name + enemy.Message);
-                    logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy.EnemyAttackSum + "のダメージ!");
                 }
                 else
                 {
+                    //敵通常攻撃時の計算処理
                     enemy.EnemyAttackProcessing(sum2);
-                    logTextBox.AppendText(Environment.NewLine + enemy.Name + "の攻撃！");
-                    logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy.EnemyAttackSum + "のダメージ!");
                 }
-                hero.HP = hero.HP - enemy.EnemyAttackSum;
-                hpTextBox2.Text = hero.HP.ToString();
 
                 if (hero.HP <= 0)
                 {
                     hpTextBox2.Text = "0";
                     logTextBox.AppendText(Environment.NewLine + hero.Name + "はやられてしまった…");
-                    GameOverDialog();
+                    if (dialog_flg == true)
+                    {
+                        GameOverDialog();
+                        dialog_flg = false;
+                    }
                 }
+                logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy.EnemyAttackSum + "のダメージ!");
+                hero.HP = hero.HP - enemy.EnemyAttackSum;
+                hpTextBox2.Text = hero.HP.ToString();
             }
-            else
+
+            if (enemy.HP <= 0 && enemy_delete_flg1 == true)
             {
                 logTextBox.AppendText(Environment.NewLine + enemy.Name + "を倒した！");
-                monsterPictureBox.Visible = false;
-                if (monsterPictureBox.Visible == false)
+                enemy_delete_flg1 = false;
+                monsterPictureBox1.Visible = false;
+            }
+
+            //5%の確率で敵を一撃必殺
+            if (Probability() && enemy.HP > 0)
+            {
+                logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + enemy.Name + "は砕け散った！");
+                enemy.HP = 0;
+                monsterPictureBox1.Visible = false;
+                enemy_survival_flg1 = false;
+            }
+
+            //敵2が生存しているとき、主人公の攻撃を行う
+            if (enemy_survival_flg2)
+            {
+                //主人公が敵に攻撃
+                hero.AttackProcessing(sum, enemy2.Defense);
+                logTextBox.AppendText(Environment.NewLine + enemy2.Name + "に" + hero.AttackSum + "のダメージ!");
+                enemy2.HP = enemy2.HP - hero.AttackSum;
+            }
+
+            //敵の生死判定
+            if (enemy2.HP <= 0)
+            {
+                enemy_survival_flg2 = false;
+            }
+
+            //敵が生存しているとき、敵の攻撃を行う
+            if (enemy_survival_flg2)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy2.Name + "の攻撃！");
+                if (Probability2())
+                {
+                    //敵固有わざの計算処理
+                    enemy2.EnemyCriticalProcessing(sum2);
+                    //敵固有わざのメッセージ
+                    logTextBox.AppendText(Environment.NewLine + enemy2.Name + enemy2.Message);
+                }
+                else
+                {
+                    //敵通常攻撃時の計算処理
+                    enemy2.EnemyAttackProcessing(sum2);
+                }
+
+                if (hero.HP <= 0)
+                {
+                    hpTextBox2.Text = "0";
+                    logTextBox.AppendText(Environment.NewLine + hero.Name + "はやられてしまった…");
+                    if (dialog_flg == true)
+                    {
+                        GameOverDialog();
+                        dialog_flg = false;
+                    }
+                }
+                logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy2.EnemyAttackSum + "のダメージ!");
+                hero.HP = hero.HP - enemy2.EnemyAttackSum;
+                hpTextBox2.Text = hero.HP.ToString();
+            }
+
+            if (enemy2.HP <= 0 && enemy_delete_flg2 == true)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy2.Name + "を倒した！");
+                enemy_delete_flg2 = false;
+                monsterPictureBox2.Visible = false;
+            }
+
+            //敵3が生存しているとき、主人公の攻撃を行う
+            if (enemy_survival_flg3)
+            {
+                //主人公が敵に攻撃
+                hero.AttackProcessing(sum, enemy3.Defense);
+                logTextBox.AppendText(Environment.NewLine + enemy3.Name + "に" + hero.AttackSum + "のダメージ!");
+                enemy3.HP = enemy3.HP - hero.AttackSum;
+            }
+
+            //敵の生死判定
+            if (enemy3.HP <= 0)
+            {
+                enemy_survival_flg3 = false;
+            }
+
+            //敵が生存しているとき、敵の攻撃を行う
+            if (enemy_survival_flg3)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy3.Name + "の攻撃！");
+                if (Probability2())
+                {
+                    //敵固有わざの計算処理
+                    enemy3.EnemyCriticalProcessing(sum2);
+                    //敵固有わざのメッセージ
+                    logTextBox.AppendText(Environment.NewLine + enemy3.Name + enemy3.Message);
+                }
+                else
+                {
+                    //敵通常攻撃時の計算処理
+                    enemy3.EnemyAttackProcessing(sum2);
+                }
+
+                if (hero.HP <= 0)
+                {
+                    hpTextBox2.Text = "0";
+                    logTextBox.AppendText(Environment.NewLine + hero.Name + "はやられてしまった…");
+                    if (dialog_flg == true)
+                    {
+                        GameOverDialog();
+                        dialog_flg = false;
+                    }
+                }
+                logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemy3.EnemyAttackSum + "のダメージ!");
+                hero.HP = hero.HP - enemy3.EnemyAttackSum;
+                hpTextBox2.Text = hero.HP.ToString();
+            }
+
+            if (enemy3.HP <= 0 && enemy_delete_flg3 == true)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy3.Name + "を倒した！");
+                enemy_delete_flg3 = false;
+                monsterPictureBox3.Visible = false;
+            }
+            ////敵１、敵２、敵３の判別をつけたい
+            //if (enemyBox[0])
+            //{
+            //    enemyHp = enemy.HP;
+            //    enemyName = enemy.Name;
+            //    enemy_survival_flg = enemy_survival_flg1;
+            //    enemyDefense = enemy.Defense;
+            //    enemyMessage = enemy.Message;
+            //    monsterPictureBox = monsterPictureBox1;
+            //}
+
+            //AttackAlternate();
+
+            if (enemy.HP <= 0 && enemy2.HP <= 0 && enemy3.HP <= 0)
+            {
+                if (monsterPictureBox1.Visible == false && monsterPictureBox2.Visible == false && monsterPictureBox3.Visible == false)
                 {
                     attackButton.Enabled = false;
                     techniqueButton.Enabled = false;
@@ -240,6 +442,72 @@ namespace LuckQuest
                 GameClearDialog();
             }
         }
+
+        //public void AttackAlternate()
+        //{
+        //    //5%の確率で敵を一撃必殺
+        //    if (Probability() && enemyHp > 0)
+        //    {
+        //        logTextBox.AppendText(Environment.NewLine + "会心の一撃！" + Environment.NewLine + enemyName + "は砕け散った！");
+        //        enemyHp = 0;
+        //        monsterPictureBox.Visible = false;
+        //        enemy_survival_flg = false;
+        //    }
+
+        //    //敵が生存しているとき、主人公の攻撃を行う
+        //    if (enemy_survival_flg)
+        //    {
+        //        //主人公が敵に攻撃
+        //        hero.AttackProcessing(sum, enemyDefense);
+        //        logTextBox.AppendText(Environment.NewLine + enemyName + "に" + hero.AttackSum + "のダメージ!");
+        //        enemyHp = enemyHp - hero.AttackSum;
+
+        //        if (hero.HP <= 0)
+        //        {
+        //            hpTextBox2.Text = "0";
+        //            logTextBox.AppendText(Environment.NewLine + hero.Name + "はやられてしまった…");
+        //            if (dialog_flg == true)
+        //            {
+        //                GameOverDialog();
+        //                dialog_flg = false;
+        //            }
+        //        }
+        //    }
+
+        //    //敵の生死判定
+        //    if (enemyHp <= 0)
+        //    {
+        //        enemy_survival_flg = false;
+        //    }
+
+        //    //敵が生存しているとき、敵の攻撃を行う
+        //    if (enemy_survival_flg)
+        //    {
+        //        logTextBox.AppendText(Environment.NewLine + enemyName + "の攻撃！");
+        //        if (Probability2())
+        //        {
+        //            //敵固有わざの計算処理
+        //            enemyBox.EnemyCriticalProcessing(sum2);
+        //            //敵固有わざのメッセージ
+        //            logTextBox.AppendText(Environment.NewLine + enemyName + enemyMessage);
+        //        }
+        //        else
+        //        {
+        //            //敵通常攻撃時の計算処理
+        //            enemyBox.EnemyAttackProcessing(sum2);
+        //        }
+        //        logTextBox.AppendText(Environment.NewLine + hero.Name + "に" + enemyBox.EnemyAttackSum + "のダメージ!");
+        //        hero.HP = hero.HP - enemyBox.EnemyAttackSum;
+        //        hpTextBox2.Text = hero.HP.ToString();
+        //    }
+
+        //    if (enemyHp <= 0 && enemy_delete_flg == true)
+        //    {
+        //        logTextBox.AppendText(Environment.NewLine + enemyName + "を倒した！");
+        //        enemy_delete_flg = false;
+        //        monsterPictureBox1.Visible = false;
+        //    }
+        //}
 
         public void GameClearDialog()
         {
@@ -275,6 +543,130 @@ namespace LuckQuest
                 attackButton.Enabled = false;
                 techniqueButton.Enabled = false;
                 logTextBox.AppendText(Environment.NewLine + "世界は闇に包まれている…");
+            }
+        }
+        //わざ名ボタン
+        private void skillButton_Click(object sender, EventArgs e)
+        {
+            gif_image = job.ImageFile;
+            waza_damage = job.Waza1Damage;
+            waza_message1 = job.Waza1Message1;
+            waza_message2 = job.Waza1Message2;
+            waza = job.Waza1Mp;
+            skillProcessing();
+        }
+
+        private void skillButton2_Click(object sender, EventArgs e)
+        {
+            gif_image = job.ImageFile2;
+            waza_damage = job.Waza2Damage;
+            waza_message1 = job.Waza2Message1;
+            waza_message2 = job.Waza2Message2;
+            waza = job.Waza2Mp;
+            skillProcessing();
+        }
+
+        private void skillButton3_Click(object sender, EventArgs e)
+        {
+            gif_image = job.ImageFile3;
+            waza_damage = job.Waza3Damage;
+            waza_message1 = job.Waza3Message1;
+            waza_message2 = job.Waza3Message2;
+            waza = job.Waza3Mp;
+            skillProcessing();
+        }
+
+        private void skillProcessing()
+        {
+            battlePictureBox.Image = Image.FromFile("haikei.png");
+            if (hero.MP < waza)
+            {
+                logTextBox.AppendText(Environment.NewLine + "MPが足りない！");
+                techniquePanel.Visible = false;
+            }
+            else
+            {
+                string enemy_name = "";
+                if (enemy.HP > 0)
+                {
+                    enemy_name = enemy.Name;
+                }
+                else if (enemy2.HP > 0)
+                {
+                    enemy_name = enemy2.Name;
+                }
+                else if (enemy3.HP > 0)
+                {
+                    enemy_name = enemy3.Name;
+                }
+
+                logTextBox.AppendText(Environment.NewLine + waza_message1 + Environment.NewLine + enemy_name + waza_message2);
+
+                if (enemy.HP > 0 && enemy_delete_flg1 == true)
+                {
+                    logTextBox.AppendText(Environment.NewLine + enemy.Name + "に" + waza_damage + "のダメージ！");
+                }
+
+                if (enemy2.HP > 0 && enemy_delete_flg2 == true)
+                {
+                    logTextBox.AppendText(Environment.NewLine + enemy2.Name + "に" + waza_damage + "のダメージ！");
+                }
+
+                if (enemy3.HP > 0 && enemy_delete_flg3 == true)
+                {
+                    logTextBox.AppendText(Environment.NewLine + enemy3.Name + "に" + waza_damage + "のダメージ！");
+                }
+
+                hero.MP = hero.MP - waza;
+                mpTextBox2.Text = hero.MP.ToString();
+                enemy.HP = enemy.HP - waza_damage;
+                enemy2.HP = enemy2.HP - waza_damage;
+                enemy3.HP = enemy3.HP - waza_damage;
+
+                techniquePanel.Visible = false;
+
+                //わざエフェクト時に敵モンスターの画像ファイルを非表示にする
+                monsterPictureBox1.Visible = false;
+                monsterPictureBox2.Visible = false;
+                monsterPictureBox3.Visible = false;
+
+                //背景画像をわざエフェクトに差し替える
+                battlePictureBox.Image = Image.FromFile(gif_image);
+
+                if (job.JobType == Enum.JobsType.遊び人)
+                {
+                    job.JobType = Enum.JobsType.元遊び人;
+                    job.JobInit();
+                    jobTextBox2.Text = job.JobName;
+                    skillButton.Text = job.WazaName;
+                }
+            }
+
+            if (enemy.HP <= 0 && enemy_delete_flg1 == true)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy.Name + "を倒した！");
+                enemy_delete_flg1 = false;
+            }
+
+            if (enemy2.HP <= 0 && enemy_delete_flg2 == true)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy2.Name + "を倒した！");
+                enemy_delete_flg2 = false;
+            }
+
+            if (enemy3.HP <= 0 && enemy_delete_flg3 == true)
+            {
+                logTextBox.AppendText(Environment.NewLine + enemy3.Name + "を倒した！");
+                enemy_delete_flg3 = false;
+            }
+
+            if (enemy.HP <= 0 && enemy2.HP <= 0 && enemy3.HP <= 0)
+            {
+                if (monsterPictureBox1.Visible == false && monsterPictureBox2.Visible == false && monsterPictureBox3.Visible == false)
+                {
+                    attackButton.Enabled = false;
+                }
+                GameClearDialog();
             }
         }
     }
